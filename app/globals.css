@@ -1,33 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Work+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --primary-color: 0 0 0 /*#000*/;
+  --secondary-color: 102 102 102 /*#888888*/;
+  --background-color: 255 255 255 /*#fff*/;
+  --foreground-color: 102 102 102 /*#666666*/;
+  --light-accent-1: #a6a6a6;
+  --dark-accent-1: 195 195 195 /*#1f1f1f*/;
+  --dark-accent-2: 200 200 200 /*#0a0a0a*/;
+  --dark-accent-3: #111111;
+}
+
+.dark-scheme {
+  --primary-color: 237 237 237 /*#ededed*/;
+  --secondary-color: 102 102 102 /*#888888*/;
+  --background-color: 0 0 0 /*#000*/;
+  --foreground-color: 17 17 17 /*#111111*/;
+  --light-accent-1: #a6a6a6;
+  --dark-accent-1: 31 31 31 /*#1f1f1f*/;
+  --dark-accent-2: 20 20 20 /*#0a0a0a*/;
+  --dark-accent-3: #111111;
+}
+
+.light-scheme {
+  --primary-color: 0 0 0 /*#000*/;
+  --secondary-color: 102 102 102 /*#888888*/;
+  --background-color: 255 255 255 /*#fff*/;
+  --foreground-color: 230 230 230 /*#666666*/;
+  --light-accent-1: #a6a6a6;
+  --dark-accent-1: 195 195 195 /*#1f1f1f*/;
+  --dark-accent-2: 200 200 200 /*#0a0a0a*/;
+  --dark-accent-3: #111111;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+  .system-scheme {
+    --primary-color: 237 237 237 /*#ededed*/;
+    --secondary-color: 102 102 102 /*#888888*/;
+    --background-color: 0 0 0 /*#000*/;
+    --foreground-color: 17 17 17 /*#111111*/;
+    --light-accent-1: #a6a6a6;
+    --dark-accent-1: 31 31 31 /*#1f1f1f*/;
+    --dark-accent-2: 20 20 20 /*#0a0a0a*/;
+    --dark-accent-3: #111111;
   }
+
 }
 
+ * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  /* font-family: 'Work Sans', sans-serif; */
+ }
+
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  width: 100vw;
+  color: rgb(var(--primary-color));
+  background: rgb(var(--background-color));
+  overflow-x: hidden;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+}
+
+.sidebar {
+  border-right: 1px solid rgb(var(--secondary-color) / 0.4);
+}
+
+.icon {
+  cursor: pointer;
+  color: rgb(var(--secondary-color));
+  transition: scale 350ms ease, color 300ms ease;
+}
+
+.title .title-icon {
+  display: none;
+}
+
+.icon:hover {
+  color: rgb(var(--primary-color));
+}
+
+.title {
+  font-family: cursive;
+}
+
+.story:not(.no-story) {
+  background: linear-gradient(to right, #a855f7, #ec4899);
+  display: inline;
+}
+
+.story {
+  cursor: pointer;
+  position: relative;
+  display: none;
+}
+
+.story.watched {
+  background: rgb(var(--secondary-color) / 0.5);
+  display: inline;
+}
+
+.story.self {
+  display: inline;
+}
+
+.story-wrapper .username {
+  font-size: .8rem;
+  color: rgb(var(--secondary-color));
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.story.self:not(.active-story):before {
+  content: "+";
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  padding-top: 1.45px;
+  padding-left: .7px;
+  color: rgb(var(--background-color));
+  background: rgb(var(--primary-color));
+  border: 2px solid rgb(var(--background-color) / 0.4);
+}
+
+.icon:active {
+  scale: 0.9;
+}
+
+.feed::-webkit-scrollbar {
+  width: 10px;
+}
+
+.feed::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.feed::-webkit-scrollbar-thumb {
+  background: rgb(var(--foreground-color));
+  border-radius: 10px;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+@media (max-width: 990px) {
+
+  .sidebar .sidebar-item p,
+  .title .title-text  {
+    display: none;
+  }
+
+  .sidebar .sidebar-item {
+    width: fit-content;
+  }
+
+  .title .title-icon  {
+    display: inline;
+  }
+
 }

@@ -6,7 +6,7 @@ export default function Stories({
     children: React.ReactNode;
   }) {
   return (
-    <section className="stories flex items-center justify-start w-full gap-5">
+    <section className="stories flex items-center justify-start w-[700px] gap-5">
       {children}
     </section>
   )

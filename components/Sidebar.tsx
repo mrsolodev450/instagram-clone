@@ -14,7 +14,7 @@ import {
 import { RiMessengerLine } from "react-icons/ri";
 import PFP from './ui/PFP';
 
-export default function Sidebar() {
+export default function Sidebar({action = ()=>{}}: {action?: any}) {
   return (
     <section className="h-full px-5 py-5 flex flex-col items-start justify-between sidebar">
         <div className="flex items-center justify-start text-[2.2rem] title">
@@ -61,7 +61,7 @@ export default function Sidebar() {
             </span>
             <p className="text-[1.2rem]">Notification</p>
           </li>
-          <li className="w-[200px] sidebar-item h-[40px] icon flex items-center justify-start gap-5">
+          <li className="w-[200px] sidebar-item h-[40px] icon flex items-center justify-start gap-5" onClick={() => action()}>
             <span className="text-[1.7rem]">
               <FiPlusCircle />
             </span>
@@ -69,7 +69,7 @@ export default function Sidebar() {
           </li>
           <li className="w-[200px] sidebar-item h-[40px] icon flex items-center justify-start gap-5">
             <span className="text-[1.7rem]">
-              <PFP image={"/defualt-user-pfp.png"} />
+              <PFP image={"/pfp.png"} />
             </span>
             <p className="text-[1.2rem]">Profile</p>
           </li>

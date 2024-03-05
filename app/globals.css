@@ -68,15 +68,22 @@ body {
   overflow-x: hidden;
   overflow-y: hidden;
   scroll-behavior: smooth;
+  /* color: #111111; */
 }
 
 .sidebar {
   border-right: 1px solid rgb(var(--secondary-color) / 0.4);
+  padding-right: 100px;
 }
 
 .icon {
   cursor: pointer;
   color: rgb(var(--secondary-color));
+}
+
+.icon span,
+.icon p,
+.icon.only-icon {
   transition: scale 350ms ease, color 300ms ease;
 }
 
@@ -86,6 +93,32 @@ body {
 
 .icon:hover {
   color: rgb(var(--primary-color));
+}
+
+.icon p:active {
+  scale: 0.9;
+}
+
+.icon.only-icon:active {
+  scale: 0.8;
+}
+
+
+.icon span:active {
+  scale: 0.8;
+}
+
+.button {
+  cursor: pointer;
+  transition: scale 350ms ease, background-color 300ms ease;
+}
+
+.button:active {
+  scale: 0.9;
+}
+
+.button:hover {
+  background-color: rgb(65 105 225 / 0.85);
 }
 
 .title {
@@ -141,9 +174,6 @@ body {
   border: 2px solid rgb(var(--background-color) / 0.4);
 }
 
-.icon:active {
-  scale: 0.9;
-}
 
 .feed::-webkit-scrollbar {
   width: 10px;
@@ -165,6 +195,10 @@ body {
 }
 
 @media (max-width: 990px) {
+
+  .sidebar {
+    padding-right: 20px;
+  }
 
   .sidebar .sidebar-item p,
   .title .title-text  {

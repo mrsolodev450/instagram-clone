@@ -42,8 +42,3 @@ export default function DmList({ user }: { user: User[] }) {
   );
 }
 
-// onClick={() => {
-//   if (typeof window !== "undefined" && window.history.state === '/dm') {
-//     router.replace(`/dm/${user.username}`);
-//   } else router.push(`/${user.username}`);
-// }}

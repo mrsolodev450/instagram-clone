@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function SearchPageLayout({
+export default function ExploreLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

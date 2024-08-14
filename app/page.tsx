@@ -3,16 +3,12 @@
 import Feed from "@/components/Feed";
 import Post from "@/components/Post";
 import Sidebar from "@/components/sidebar/Sidebar";
-import ChooseFile from "@/components/UploadPost/ChooseFile";
-import TitleBar from "@/components/UploadPost/TitleBar";
-import UploadPost from "@/components/UploadPost/UploadPost";
 import Stories from "@/components/story/Stories";
 import Story from "@/components/story/Story";
 import { useEffect, useState } from "react";
-
-interface PostIntraction {
-  intractionType: 'del' | 'like' | 'save' | 'share' | 'comment' | string
-}
+import userData from "./api/userData";
+import { redirect } from "next/navigation";
+import BottomNavbar from "@/components/bottomnav/BottomNavbar";
 
 interface Author {
   name: string,
@@ -33,7 +29,7 @@ interface Reactions {
 
 interface Post {
   caption: string
-  timeposted: any
+  timePosted: any
   author: Author
   audio?: string
   image: string
@@ -43,13 +39,6 @@ interface Post {
 }
 
 export default function Home() {
-
-  const USER = {
-    name: 'Krishan Murari',
-    username: 'knightwor_',
-    password: '1234567890',
-    image: '/pfp.png'
-  }
 
   function getData(query: string, type: string) {
 
@@ -63,63 +52,19 @@ export default function Home() {
 
   const [FeedPost, UpdateFeedPost] = useState(getData("feed-post", 'JSON'));
   const [HavePost, UpdateHavePost] = useState(getData("have-post", 'Bool'));
-  const [choosedFile, setChoosedFile] = useState('');
-  const [isFileChoosed, setFileChoosed] = useState(false);
-  const [isFileUploadingStarted, setFileUploadingStarted] = useState(false);
 
-  function uploadPost(data: Post) {
-
-    if (data.image == null || data.image == "") return;
-
-    const obj = {
-      caption: data.caption,
-      author: {
-        name: USER.username,
-        image: USER.image,
-      },
-      timeposted: data.timeposted,
-      image: data.image,
-      reactions: {
-        likes: 0,
-        comments: {
-          count: 0,
-          data: 'null'
-        },
-        shares: 0,
-        saves: 0
-      },
-      likedUser: []
-    }
-
-    if (FeedPost && !HavePost) {
-      UpdateFeedPost([
-        obj
-      ]);
-
-      UpdateHavePost(true)
-    } else {
-      UpdateFeedPost([
-        ...FeedPost,
-        obj,
-      ]);
-    }
-    
-    setFileUploadingStarted(false)
+  if (userData.fetchUser().username == undefined) {
+    redirect("/login")
   }
 
-  function handleUploadPost() {
-    setFileUploadingStarted(true)
-    setFileChoosed(false)
-  }
-
-  function postInteraction(id: any, intractionType: string) {
+  function postInteraction(id: any, interactionType: string) {
     let Id: number = parseInt(id) 
     
-    if (intractionType === 'del') deletePost(Id)
-    else if (intractionType === 'like') likePost(Id);
-    else if (intractionType === 'save') console.log('saved post to collection');
-    else if (intractionType === 'share') console.log('shared post to xyz');
-    else if (intractionType === 'comment') commentOnPost(Id)
+    if (interactionType === 'del') deletePost(Id)
+    else if (interactionType === 'like') likePost(Id);
+    else if (interactionType === 'save') console.log('saved post to collection');
+    else if (interactionType === 'share') console.log('shared post to xyz');
+    else if (interactionType === 'comment') commentOnPost(Id)
   }
 
   function deletePost(id: number) {
@@ -139,13 +84,13 @@ export default function Home() {
   function likePost(id: number) {
     let TempPost: any = JSON.parse(JSON.stringify(FeedPost))
     
-    if (!TempPost[id].likedUser.includes(USER.username)) {
+    if (!TempPost[id].likedUser.includes(userData.fetchUser().username)) {
       TempPost[id].reactions.likes += 1
-      TempPost[id].likedUser.push(USER.username)
+      TempPost[id].likedUser.push(userData.fetchUser().username)
     }
     else {
       TempPost[id].reactions.likes -= 1
-      TempPost[id].likedUser.pop(USER.username)
+      TempPost[id].likedUser.pop(userData.fetchUser().username)
     }
 
     UpdateFeedPost(TempPost)
@@ -159,7 +104,7 @@ export default function Home() {
     UpdateFeedPost(TempPost)
   }
 
-  useEffect(() => {'/post2.jpeg'
+  useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("feed-post", JSON.stringify(FeedPost));
       localStorage.setItem("have-post", HavePost);
@@ -168,33 +113,31 @@ export default function Home() {
     
   }, [FeedPost]);
 
-  function getFile(val: string) {
-    setChoosedFile(val)
-    setFileChoosed(true)
-  }
-
   return (
     <main className="flex h-screen items-center justify-between">
-      <Sidebar action={handleUploadPost} />
+      <Sidebar />
+      <BottomNavbar />
 
       <Feed>
         <Stories>
           <Story
-            username={"jkhsdmnbsd"}
-            image={"/defualt-user-pfp.png"}
-            isOwener={true}
+            username={userData.fetchUser().username}
+            image={userData.fetchUser()
+              ? userData.fetchUser().image
+              : "/default-user-pfp.png"}
+            isOwner={true}
             isWatched={false}
           />
           <Story
-            username={"jkhsdmnbsd"}
-            image={"/defualt-user-pfp.png"}
-            isOwener={false}
+            username={userData.UserList[2].username}
+            image={userData.UserList[2].image}
+            isOwner={false}
             isWatched={true}
           />
           <Story
-            username={"jkhsdmnbsd"}
-            image={"/defualt-user-pfp.png"}
-            isOwener={false}
+            username={userData.UserList[1].username}
+            image={userData.UserList[1].image}
+            isOwner={false}
             isWatched={false}
           />
         </Stories>
@@ -204,7 +147,7 @@ export default function Home() {
               <Post
                 key={index}
                 caption={item.caption}
-                timeposted={item.timeposted}
+                timePosted={item.timePosted}
                 author={item.author}
                 image={item.image}
                 reactions={item.reactions}
@@ -216,12 +159,6 @@ export default function Home() {
           : ""}
       </Feed>
 
-      {/* ----------- Upload Post Window -------- */}
-
-      
-      {isFileUploadingStarted ? isFileChoosed ? <UploadPost image={choosedFile} action={uploadPost}></UploadPost> : <ChooseFile action={getFile}></ChooseFile> : <></>}
-
-      {/* ----------- Suggestion Section -------- */}
 
       <section className="w-[100px] h-full hidden"></section>
     </main>

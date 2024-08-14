@@ -2,7 +2,7 @@
 
 import UserCard from "@/components/UserCard";
 import Sidebar from "@/components/sidebar/Sidebar";
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import userData from "../api/userData";
 import BottomNavbar from "@/components/bottomnav/BottomNavbar";
 import SearchBar from "@/components/SearchBar";
@@ -10,13 +10,12 @@ import SearchBar from "@/components/SearchBar";
 export default function SearchPage() {
  
   const users = userData.UserList;
-  const [findedUsers, setFindedUsers] = useState(users)
+  const [findedUsers, setFindedUsers] = useState([])
 
   function findUser(value: string) {
     let temp: any = []
-    if (value === '') setFindedUsers(users)
     users.forEach((user) => {
-      if (user.username.includes(value.replace(' ', '_')) || user.name.includes(value.replace(' ', '_'))) {
+      if ((user.username.includes(value.trim().replace(' ', '_')) || user.name.includes(value.trim().replace(' ', '_'))) && value.trim() !== "") {
         temp.push(user)
       }
     })

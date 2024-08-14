@@ -15,7 +15,7 @@ export default function DmSidebar({ user }: { user: User[] }) {
   const router = useRouter();
 
   return (
-    <section className=" px-5 py-5 flex flex-col items-center justify-start  dm-sidebar gap-10">
+    <section className=" px-5 py-5 flex flex-col items-center justify-start  dm-sidebar gap-20">
       <div className="flex items-center justify-start w-full gap-5 text-[2.2rem] title">
         <span className="text-[1.4rem] font-semibold">Messages</span>
       </div>
@@ -33,7 +33,7 @@ export default function DmSidebar({ user }: { user: User[] }) {
               <span className="text-[1.7rem]">
                 {<PFP image={user.image} />}
               </span>
-              <p className="text-[1.05rem]">{user.name}</p>
+              <p className="text-[1.05rem] text-primary-color">{user.name}</p>
             </Link>
           </li>
         ))}
@@ -41,9 +41,3 @@ export default function DmSidebar({ user }: { user: User[] }) {
     </section>
   );
 }
-
-// onClick={() => {
-//   if (typeof window !== "undefined" && window.history.state === '/dm') {
-//     router.replace(`/dm/${user.username}`);
-//   } else router.push(`/${user.username}`);
-// }}

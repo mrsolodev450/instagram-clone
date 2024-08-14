@@ -19,7 +19,7 @@ type Reactions = {
 
 type Post = {
   caption: string;
-  timeposted: any;
+  timePosted: any;
   author: Author;
   audio?: string;
   image: string;
@@ -44,7 +44,7 @@ export default function deletePost(id: number) {
   let userChoice = confirm("Are you sure about to delete this post?");
   if (userChoice) {
     SaveData("feed-post", TempPost);
-    location.reload()
+    // location.reload()
   } else console.log("Post delete canceled by owner!");
 }
 

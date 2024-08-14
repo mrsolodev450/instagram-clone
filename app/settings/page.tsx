@@ -1,7 +1,7 @@
 "use client";
 
 import Sidebar from "@/components/sidebar/Sidebar";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   FiChevronRight,
   FiLock,

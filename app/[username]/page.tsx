@@ -20,7 +20,6 @@ import { RiUserUnfollowLine } from "react-icons/ri";
 import BottomNavbar from "@/components/bottomnav/BottomNavbar";
 import Sidebar from "@/components/sidebar/Sidebar";
 import deletePost from "../api/deletePost";
-import { BiError } from "react-icons/bi";
 
 type User = {
   name: string;
@@ -29,7 +28,6 @@ type User = {
   followers: string[];
   following: string[];
   userId: number;
-  height: number;
   country: string;
   bio: string;
 };
@@ -39,7 +37,7 @@ export default function Profile({ params }: { params: { username: string } }) {
   const UserList = userData.UserList;
   const loggedInUser: User = userData.fetchUser();
   const user: User = getUser();
-  const [isFollowing, setFollowing] = useState(false);
+  const [isFollowing, setFollowing] = useState(user.followers.includes(loggedInUser.username) || loggedInUser.following.includes(username));
   const router = useRouter();
 
   function getUser(): User {
@@ -50,7 +48,6 @@ export default function Profile({ params }: { params: { username: string } }) {
       followers: [],
       following: [],
       userId: 0,
-      height: NaN,
       country: "Unknown",
       bio: "",
     };
@@ -69,6 +66,21 @@ export default function Profile({ params }: { params: { username: string } }) {
 
   function followUser() {
     setFollowing(!isFollowing);
+
+    if (!user.followers.includes(username)) {
+      user.followers.push(user.username)
+      loggedInUser.following.push(username)
+    }
+    else {
+      let temp: any = []
+      user.followers.forEach(item => {
+        if (item == username) return
+
+        temp.push(item)
+      })
+
+      user.followers = temp
+    }
   }
 
   function openDm() {
@@ -135,6 +147,14 @@ export default function Profile({ params }: { params: { username: string } }) {
                   </div>
                 </div>
               </div>
+                        
+              <section className="bio w-[800px] flex flex-col items-center justify-start text-secondary-color px-1 py-5 gap-5">
+                <div className="w-full flex flex-col justify-start gap-3 items-start">
+                  <pre className="ctgry-info w-[500px] text-secondary-color text-[1.1rem] flex items-center justify-start gap-5">
+                    {user.bio}
+                  </pre>
+                </div>
+              </section>
 
               <ul className="flex w-full justify-end items-center gap-5text-[1rem] gap-5">
                 {loggedInUser && loggedInUser.username !== username ? (
@@ -189,14 +209,6 @@ export default function Profile({ params }: { params: { username: string } }) {
               </ul>
             </div>
 
-            <section className="bio w-[800px] flex flex-col items-center justify-start text-secondary-color px-1 py-5 gap-5">
-              <div className="w-full flex flex-col justify-start gap-3 items-start">
-                <h1 className="ctgry-info w-[500px] text-secondary-color text-[1.2rem] flex items-center justify-start gap-5">
-                  {user.bio}
-                </h1>
-              </div>
-            </section>
-
             <section className="post-prt w-[800px] flex flex-col items-center justify-start mt-10 ml-2 gap-7">
               <div className="w-full flex items-center justify-between">
                 <h1 className="ctgry-title w-full cursor-pointer text-primary-color text-[1.5rem] flex items-center justify-start gap-5 font-semibold">
@@ -228,7 +240,7 @@ export default function Profile({ params }: { params: { username: string } }) {
 
                     {loggedInUser && loggedInUser.username === username ? (
                       <span
-                        className=" text-[1.3rem] bg-foreground-color/40 text-primary-color transition-all active:scale-95 cursor-pointer rounded-full px-3 py-3 absolute top-2 left-2 hover:bg-red-500"
+                        className=" text-[1.3rem] bg-foreground-color/40 text-[#eeecff] transition-all active:scale-95 cursor-pointer rounded-full px-3 py-3 absolute top-2 left-2 hover:bg-red-500"
                         onClick={() => {
                           deletePost(item.id);
                         }}

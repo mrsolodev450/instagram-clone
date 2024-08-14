@@ -10,9 +10,7 @@ import {
   FiMail,
   FiUser,
 } from "react-icons/fi";
-import { authenticate } from "@/app/lib/actions";
 import { useFormState } from "react-dom";
-import userData from "../api/userData";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { BiWorld } from "react-icons/bi";
@@ -24,7 +22,6 @@ type User = {
 
 export default function SignUpPage() {
   const [showPaswd, setShowPaswd] = useState(false);
-  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
   const usrnameRef = useRef<HTMLInputElement>(null);
   const fullnameRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
@@ -37,10 +34,6 @@ export default function SignUpPage() {
 
   function handleFormSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    let crntUser: User = {
-      username: "",
-      password: "",
-    };
 
     if (usrnameRef.current && pswdRef.current) {
       if (

@@ -55,8 +55,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-  /* font-family: 'Work Sans', sans-serif; */
+  /* font-family: "Poppins", sans-serif; */
+  font-family: 'Work Sans', sans-serif;
 }
 
 body {
@@ -156,10 +156,6 @@ body {
   display: none;
 }
 
-.icon:hover {
-  color: rgb(var(--primary-color));
-}
-
 .icon p:active {
   scale: 0.9;
 }
@@ -231,12 +227,10 @@ body {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  font-size: 1.3rem;
-  padding-top: 1.45px;
-  padding-left: 0.7px;
-  color: rgb(var(--background-color));
-  background: rgb(var(--primary-color));
-  border: 2px solid rgb(var(--background-color) / 0.4);
+  font-size: 1.2rem;
+  color: #eeecff;
+  background: #4169e1;
+  border: 2px solid rgb(var(--background-color) / 1);
 }
 
 .msg-box::-webkit-scrollbar {
@@ -289,11 +283,6 @@ input::-webkit-inner-spin-button {
   }
 }
 
-/* @media (max-width: 1000px) {
-  .profile-pg {
-    align-items: end;
-  }
-} */
 
 @media (max-width: 1500px) {
   .sidebar {
@@ -359,6 +348,10 @@ input::-webkit-inner-spin-button {
 
   .title {
     display: none;
+  }
+
+  .stories {
+    width: 600px;
   }
 
   .post {
@@ -428,6 +421,11 @@ input::-webkit-inner-spin-button {
   .feed {
     padding-left: 10px;
     padding-right: 10px;
+  }
+
+  .stories {
+    width: 100%;
+    gap: 10px;
   }
 
   .post .nav .pfp,

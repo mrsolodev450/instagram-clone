@@ -37,7 +37,7 @@ export default function UploadPost({
   function postData() {
     const obj = {
       caption: caption,
-      timeposted: 0,
+      timePosted: getCurrentTime(),
       image: image ? image : '',
       reactions: {
         likes: 0,
@@ -58,6 +58,27 @@ export default function UploadPost({
     
   }
 
+  function getCurrentTime() {
+    const MonthNames = ["Jan", "Feb", "March", "May", "Jun", "July", "Aug", "Nov", "Dec"]
+
+    let time = new Date(Date.now())
+    let hours: any
+    let minutes = time.getMinutes() 
+    let date = time.getDate()
+    let month = MonthNames[time.getMonth() - 1]
+    let year = time.getFullYear()
+    let AoP = time.getHours() <= 12 ? "AM" : "PM"
+
+    if (time.getHours() > 12) 
+      hours = time.getHours() - 12
+
+    if (hours < 10)
+      hours = `0${hours}`
+
+    return `${date} ${month} ${year}, ${hours}:${minutes} ${AoP}`
+    
+  }
+
   if (show)
     return (
       <>
@@ -73,7 +94,7 @@ export default function UploadPost({
             <PostImage image={image ? image : ""} />
             <div className="h-[500px] overflow-auto flex flex-col items-center justify-start gap-3  py-3 px-2 post-dtl">
               <div className="user-dtl flex items-center justify-start gap-4 w-full">
-                <PFP image={userData.fetchUser() ? userData.fetchUser().image : "/defualt-user-pfp.png"} />
+                <PFP image={userData.fetchUser() ? userData.fetchUser().image : "/default-user-pfp.png"} />
                 <h1 className="text-[.9rem] flex items-center justify-start gap-1">
                   {userData.fetchUser().name}
                 </h1>

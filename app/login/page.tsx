@@ -3,7 +3,7 @@
 import React, { FormEvent, useRef, useState } from "react";
 import { CgLock } from "react-icons/cg";
 import { FiEye, FiEyeOff, FiUser } from "react-icons/fi";
-import { authenticate } from "@/app/lib/actions";
+// import { authenticate } from "@/app/lib/actions";
 import { useFormState } from "react-dom";
 import userData from "../api/userData";
 import { useRouter } from "next/navigation";
@@ -16,7 +16,7 @@ type User = {
 
 export default function LoginPage() {
   const [showPaswd, setShowPaswd] = useState(false);
-  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+  // const [errorMessage, dispatch] = useFormState(authenticate, undefined);
   const [showErrorMessage, setShowErrorMessage] = useState(false)
   const usrnameRef = useRef<HTMLInputElement>(null);
   const pswdRef = useRef<HTMLInputElement>(null);

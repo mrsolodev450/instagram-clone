@@ -1,7 +1,6 @@
-import SearchBar from "@/components/SearchBar";
 import React from "react";
 
-export default function SearchLayout({
+export default function NotificationLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

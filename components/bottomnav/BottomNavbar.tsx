@@ -1,11 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  FiHome,
-  FiPlusCircle,
-  FiSearch,
-} from "react-icons/fi";
+import { FiHome, FiPlusCircle, FiSearch } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import userData from "@/app/api/userData";
 import uploadPost from "@/app/api/uploadPost";
@@ -27,7 +23,6 @@ export default function BottomNavbar() {
       icon: <FiHome />,
       action: () => {
         router.replace(`/`);
-        
       },
     },
     {
@@ -35,7 +30,6 @@ export default function BottomNavbar() {
       icon: <FiSearch />,
       action: () => {
         router.replace(`/search`);
-        
       },
     },
     {
@@ -43,24 +37,31 @@ export default function BottomNavbar() {
       icon: <FiPlusCircle />,
       action: () => {
         setFileChoosing(true);
-        
       },
     },
     {
       title: "Notification",
       icon: <IoMdNotificationsOutline />,
-      action: () => {router.replace('/notifications')
-    }
+      action: () => {
+        router.replace("/notifications");
+      },
     },
     {
       title: "Profile",
-      icon: <PFP image={"/defualt-user-pfp.png"} />,
+      icon: (
+        <PFP
+          image={
+            userData.fetchUser()
+              ? userData.fetchUser().image
+              : "/default-user-pfp.png"
+          }
+        />
+      ),
       action: () => {
-        router.replace(`/@${userData.User.username}`)
+        router.replace(`/@${userData.User.username}`);
       },
     },
   ];
-
 
   function getFile(val: string) {
     setChoosedFile(val);
@@ -71,7 +72,6 @@ export default function BottomNavbar() {
   return (
     <>
       <section className="w-full h-[50px] px-1 fixed left-0 bottom-0 z-50 bg-foreground-color flex items-center justify-center bottom-nav">
-
         <ul className="w-[80%] flex items-center justify-between">
           {Items.map((item, index) => (
             <Item
@@ -82,8 +82,6 @@ export default function BottomNavbar() {
             />
           ))}
         </ul>
-
-        
       </section>
 
       <ChooseFile

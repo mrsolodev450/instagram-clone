@@ -1,4 +1,3 @@
-import BottomNavbar from '@/components/bottomnav/BottomNavbar';
 import Sidebar from '@/components/sidebar/Sidebar';
 import React from 'react'
 
@@ -11,7 +10,6 @@ export default function DmLayout({
   return (
     <div>
       <Sidebar />
-      
       
       {children}
     </div>

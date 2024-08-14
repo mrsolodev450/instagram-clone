@@ -16,11 +16,12 @@ export default function DmPage() {
     <DmSidebar user={userData.UserList} />
     <DmList user={userData.UserList} />
     <BottomNavbar />
+    
     <div className='dm-pg w-full h-[100vh] flex flex-col justify-center items-center gap-5'>
       <span className="text-[15rem] text-foreground-color"> 
       <LuMessagesSquare  />
       </span>
-      <h1 className=' text-secondary-color text-[2rem] font-medium'>No Dm Open</h1>
+      <h1 className=' text-secondary-color text-[2rem] font-medium'>Open Chat To Start</h1>
     </div>
     </>
   )

@@ -4,76 +4,101 @@ import {
   FiBookmark,
   FiHeart,
   FiMessageCircle,
+  FiMessageSquare,
   FiMoreVertical,
+  FiShare,
+  FiShare2,
 } from "react-icons/fi";
-import { BiShare } from "react-icons/bi";
+import { BiMessage, BiMessageAlt, BiMessageAltDetail, BiMessageAltDots, BiShare } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const USER = {
-  name: 'Krishan Murari',
-  username: 'knightwor_',
-  password: '1234567890',
-  image: '/pfp.png'
-}
+  name: "Krishan Murari",
+  username: "knightwor_",
+  password: "1234567890",
+  image: "/pfp.png",
+};
 
 interface Author {
-  name: string,
-  image: string
+  name: string;
+  username: string;
+  image: string;
 }
 
 interface Comments {
-  count: number,
-  data: string
+  count: number;
+  data: string;
 }
 
 interface Reactions {
-  likes: number,
-  comments: Comments,
-  saves: number
-  shares: number
+  likes: number;
+  comments: Comments;
+  saves: number;
+  shares: number;
 }
 
 interface Post {
-  caption: string
-  timeposted: any
-  author: Author
-  audio?: string
-  image: string
-  reactions: Reactions,
-  action?: any
-  id: number,
-  likedUser: string[]
+  caption: string;
+  timePosted: string;
+  author: Author;
+  audio?: string;
+  image: string;
+  reactions: Reactions;
+  action?: any;
+  id: number;
+  likedUser: string[];
 }
 
-export default function Post({caption, image, audio = 'Orignal Audio', author, timeposted, reactions, action = ()=>{}, id, likedUser}: Post) {
-  // let time: any = timeposted > 60 ? `${Math.floor(timeposted / 60)}min` : `${timeposted}sec`
-  // time =  timeposted > 3600 ? `${Math.floor(timeposted / 3600)}hours` : timeposted
-  const PostRef = useRef<HTMLDivElement>(null)
-  const [isPostLiked, setPostLiked] = useState(likedUser.includes(USER.username))
+export default function Post({
+  caption,
+  image,
+  audio = "Original Audio",
+  author = { image: "/default-user-pfp.png", name: "", username: "" },
+  timePosted,
+  reactions = {
+    likes: 0,
+    comments: {
+      count: 0,
+      data: "",
+    },
+    saves: 0,
+    shares: 0,
+  },
+  action = () => {},
+  id,
+  likedUser = [],
+}: Post) {
+  
+  const PostRef = useRef<HTMLDivElement>(null);
+  const [isPostLiked, setPostLiked] = useState(
+    likedUser.includes(USER.username )
+  );
+
+  const router = useRouter();
 
   function handlePostLike() {
-    // setPostLiked(likedUser.includes(USER.username))
-    action(PostRef.current?.id, 'like')
-    
-    isPostLiked ? setPostLiked(false) : setPostLiked(true)
+    action(PostRef.current?.id, "like");
+
+    isPostLiked ? setPostLiked(false) : setPostLiked(true);
   }
 
   return (
-    <div className=" w-[600px] post flex flex-col items-center justify-start gap-5 mt-5" id={`${id}`} ref={PostRef}>
-      <div className="w-[600px] flex items-center justify-between">
-        <div className="flex items-center justify-start gap-5" >
-          <PFP image={author.image} width={50} height={50} />
+    <div
+      className=" w-[600px] post flex flex-col items-center justify-start gap-5 mt-5"
+      id={`${id}`}
+      ref={PostRef}
+    >
+      <div className="w-[600px] nav flex items-center justify-between">
+        <div className="flex items-center justify-start gap-5">
+          <PFP image={author.image} width={50} height={50} action={() => router.push(`/@${author.username}`)} />
           <div>
-            <h1 className="text-[.9rem] flex items-center justify-start gap-1">
+            <h1 className="text-[.9rem] flex items-center justify-start gap-1 cursor-pointer" onClick={() => router.push(`/@${author.username}`)}>
               {author.name}
-              <span>
-                <BsDot />
-              </span>
-              <span className="text-[#888] text-[.8rem]">{Math.floor(timeposted)}sec ago</span>
             </h1>
-            <p className="text-[#888] text-[.8rem]">{audio}</p>
+            <p className="text-[#888] text-[.8rem]">{timePosted}</p>
           </div>
         </div>
         <span className="icon only-icon h-[100%] flex items-center justify-center text-[1.4rem]">
@@ -81,12 +106,14 @@ export default function Post({caption, image, audio = 'Orignal Audio', author, t
         </span>
       </div>
 
-      <div className="w-[100%] h-[600px] border-[1px] border-[#888]/20" onClick={e => action(PostRef.current?.id, 'del')}>
+      <div
+        className="w-[100%] h-[auto] image border-[1px] border-foreground-color/70 rounded-lg overflow-hidden"
+      >
         <Image
           src={image}
           alt="post2"
-          className="w-[100%] h-[100%] object-contain"
-          loading='lazy'
+          className="w-[100%] h-[100%] object-contain rounded-lg"
+          loading="lazy"
           width={1000}
           height={1000}
         />
@@ -94,31 +121,58 @@ export default function Post({caption, image, audio = 'Orignal Audio', author, t
 
       <div className="w-[100%] flex items-center justify-between">
         <div className="flex items-center justify-start gap-5">
-          <span className="icon only-icon text-[1.5rem]" onClick={handlePostLike}>
-            {isPostLiked ? <span className="text-red-500"><FaHeart/></span> : <FiHeart />}
+          <span
+            className="icon only-icon text-[1.5rem]"
+            onClick={handlePostLike}
+          >
+            {isPostLiked ? (
+              <span className="text-red-500">
+                <FaHeart />
+              </span>
+            ) : (
+              <FiHeart />
+            )}
           </span>
-          <span className="icon only-icon text-[1.5rem]" onClick={e => action(PostRef.current?.id, 'comment')}>
-            <FiMessageCircle />
+          <span
+            className="icon only-icon text-[1.5rem]"
+            onClick={(e) => action(PostRef.current?.id, "comment")}
+          >
+            <BiMessageAltDetail />
           </span>
-          <span className="icon only-icon text-[1.5rem]" onClick={e => action(PostRef.current?.id, 'share')}>
-            <BiShare />
+          <span
+            className="icon only-icon text-[1.5rem]"
+            onClick={(e) => action(PostRef.current?.id, "share")}
+          >
+            <FiShare2 />
           </span>
         </div>
 
-        <div className="icon only-icon text-[1.5rem]" onClick={e => action(PostRef.current?.id, 'save')}>
+        <div
+          className="icon only-icon text-[1.5rem]"
+          onClick={(e) => action(PostRef.current?.id, "save")}
+        >
           <FiBookmark />
         </div>
       </div>
 
       <div className="w-[100%] flex justify-start items-start flex-col">
-        <p className="w-[100%] text-left text-[.9rem] text-[#fff]">
-          {Intl.NumberFormat('en', {notation: 'compact'}).format(reactions.likes)} likes
+        <p className="w-[100%] text-left text-[.9rem] text-primary-color">
+          {Intl.NumberFormat("en", { notation: "compact" }).format(
+            reactions.likes
+          )}{" "}
+          likes
         </p>
-        <caption className="w-[100%] text-left text-[1rem] text-[#fff] overflow-hidden whitespace-nowrap text-ellipsis">
+        <caption className="w-[100%] text-left text-[1rem] text-primary-color overflow-hidden whitespace-nowrap text-ellipsis">
           {caption}
         </caption>
-        <p className="w-[100%] text-left text-[.9rem] text-[#888]">
-        {reactions.comments.count >= 1 ? `View ${reactions.comments.count == 1 ? '' : 'all'} ${Intl.NumberFormat('en', {notation: 'compact'}).format(reactions.comments.count)} ${reactions.comments.count == 1 ? 'comment' : 'comments'}` : 'No comment yet'}
+        <p className="w-[100%] text-left text-[.9rem] text-secondary-color">
+          {reactions.comments.count >= 1
+            ? `View ${
+                reactions.comments.count == 1 ? "" : "all"
+              } ${Intl.NumberFormat("en", { notation: "compact" }).format(
+                reactions.comments.count
+              )} ${reactions.comments.count == 1 ? "comment" : "comments"}`
+            : "No comment yet"}
         </p>
       </div>
     </div>

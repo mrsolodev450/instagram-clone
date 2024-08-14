@@ -8,7 +8,6 @@ type Item = {
   icon: React.ReactNode;
   path?: string;
   id: number
-  isActive: boolean
 };
 
 export default function Item({
@@ -18,7 +17,6 @@ export default function Item({
   path = "/",
   action = () => {},
   id,
-  isActive = false
 }: Item) {
   if (type == "normal")
     return (
@@ -27,9 +25,8 @@ export default function Item({
           className="w-[200px] sidebar-item h-[40px] icon flex items-center justify-start gap-5"
           onClick={() => action()}
         >
-          {/* <span className="indicator w-1 h-full bg-royalblue rounded-md absolute left-[-15px] top-0"></span> */}
           <span className="ic text-[1.7rem]">{icon}</span>
-          <p className="text-[1.2rem]">{title}</p>
+          <p className="text-[1.2rem] text-primary-color">{title}</p>
         </li>
       </div>
     );
@@ -45,9 +42,8 @@ export default function Item({
             href={path}
             
           >
-            {/* {isActive ? <span className="indicator w-1 h-full bg-royalblue rounded-md absolute left-[-15px] top-0"></span> : <></>} */}
             <span className="ic text-[1.7rem]">{icon}</span>
-            <p className="text-[1.2rem]">{title}</p>
+            <p className="text-[1.2rem] text-primary-color">{title}</p>
           </Link>
         </li>
       </div>

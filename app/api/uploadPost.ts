@@ -20,7 +20,7 @@ type Reactions = {
 
 type Post = {
   caption: string;
-  timeposted: any;
+  timePosted: string;
   author: Author;
   audio?: string;
   image: string;
@@ -48,7 +48,7 @@ export default function uploadPost(data: Post) {
       username: userData.fetchUser().username,
       image: userData.fetchUser().image,
     },
-    timeposted: data.timeposted,
+    timePosted: data.timePosted,
     image: data.image,
     reactions: {
       likes: 0,
@@ -67,7 +67,7 @@ export default function uploadPost(data: Post) {
   } else FeedPosts = [obj]
 
   SaveData("feed-post", FeedPosts);
-  location.reload()
+  // location.reload()
 }
 
 function SaveData(key: string, data: any) {

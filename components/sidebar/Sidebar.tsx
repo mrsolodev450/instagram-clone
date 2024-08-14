@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from "react";
 import { BsThreads } from "react-icons/bs";
@@ -7,10 +7,12 @@ import {
   FiHeart,
   FiHome,
   FiInstagram,
+  FiLogOut,
   FiMenu,
   FiPlayCircle,
   FiPlusCircle,
   FiSearch,
+  FiSettings,
   FiUser,
 } from "react-icons/fi";
 import { RiMessengerLine } from "react-icons/ri";
@@ -22,17 +24,14 @@ import GetTheme from "@/app/api/getTheme";
 import uploadPost from "@/app/api/uploadPost";
 import userData from "@/app/api/userData";
 import Item from "./Item";
+import Link from "next/link";
 
-type User = {
-  image: string;
-};
 
-export default function Sidebar({ action = () => {} }: { action?: any }) {
+export default function Sidebar() {
   const [isFileChoosing, setFileChoosing] = useState(false);
   const [isFileUploading, setFileUploading] = useState(false);
-  const [choosedFile, setChoosedFile] = useState("");
+  const [chooserFile, setChooserFile] = useState("");
   const router = useRouter();
-  const User: User = fetchUser();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -40,14 +39,8 @@ export default function Sidebar({ action = () => {} }: { action?: any }) {
     }
   }, []);
 
-  function fetchUser() {
-    if (typeof window !== "undefined") {
-      return JSON.parse(localStorage.getItem("logged-user") ?? "{}");
-    }
-  }
-
   function getFile(val: string) {
-    setChoosedFile(val);
+    setChooserFile(val);
     setFileChoosing(false);
     setFileUploading(true);
   }
@@ -62,7 +55,6 @@ export default function Sidebar({ action = () => {} }: { action?: any }) {
   const Items = [
     {
       id: 0,
-      isActive: true,
       type: "link",
       path: "/",
       title: "Home",
@@ -70,7 +62,6 @@ export default function Sidebar({ action = () => {} }: { action?: any }) {
     },
     {
       id: 1,
-      isActive: false,
       type: "link",
       path: "/search",
       title: "Search",
@@ -78,39 +69,27 @@ export default function Sidebar({ action = () => {} }: { action?: any }) {
     },
     {
       id: 2,
-      isActive: false,
       type: "link",
       path: "/explore",
       title: "Explore",
-      icon: <FiCompass />
+      icon: <FiCompass />,
     },
     {
       id: 3,
-      isActive: false,
-      type: "link",
-      path: "/reels",
-      title: "Reels",
-      icon: <FiPlayCircle />,
-    },
-    {
-      id: 4,
-      isActive: false,
       type: "link",
       path: "/dm",
       title: "Messages",
       icon: <RiMessengerLine />,
     },
     {
-      id: 5,
-      isActive: false,
+      id: 4,
       type: "link",
       path: "/notifications",
       title: "Notification",
       icon: <FiHeart />,
     },
     {
-      id: 6,
-      isActive: false,
+      id: 5,
       type: "normal",
       title: "Create",
       icon: <FiPlusCircle />,
@@ -119,12 +98,19 @@ export default function Sidebar({ action = () => {} }: { action?: any }) {
       },
     },
     {
-      id: 7,
-      isActive: false,
+      id: 6,
       type: "link",
       path: `/@${userData.fetchUser() && userData.fetchUser().username}`,
       title: "Profile",
-      icon: <PFP image={userData.fetchUser() ? userData.fetchUser().image : "/defualt-user-pfp.png"} />,
+      icon: (
+        <PFP
+          image={
+            userData.fetchUser()
+              ? userData.fetchUser().image
+              : "/default-user-pfp.png"
+          }
+        />
+      ),
     },
   ];
 
@@ -139,10 +125,9 @@ export default function Sidebar({ action = () => {} }: { action?: any }) {
         </div>
 
         <ul className="h-[70%] flex flex-col items-center justify-start gap-5">
-        {Items.map((item, index) => (
+          {Items.map((item, index) => (
             <Item
               id={item.id}
-              isActive={item.isActive}
               type={item.type}
               path={item.path}
               key={index}
@@ -156,16 +141,22 @@ export default function Sidebar({ action = () => {} }: { action?: any }) {
         <div className="h-[10%] flex flex-col items-center justify-start">
           <ul className="h-[100%] flex flex-col items-center justify-start gap-2">
             <li className="w-[200px] sidebar-item h-[40px] icon flex items-center justify-start gap-5">
+              <Link href={"/settings"} className="w-full h-full flex items-center justify-start gap-5">
               <span className="text-[1.7rem]">
-                <BsThreads />
+                <FiSettings />
               </span>
-              <p className="text-[1.2rem]">Threads</p>
+              <p className="text-[1.2rem] text-primary-color">Settings</p>
+              </Link>
             </li>
-            <li className="w-[200px] sidebar-item h-[40px] icon flex items-center justify-start gap-5">
+
+            <li
+              className="w-[200px] sidebar-item h-[40px] icon flex items-center justify-start gap-5"
+              onClick={logout}
+            >
               <span className="text-[1.7rem]">
-                <FiMenu />
+                <FiLogOut />
               </span>
-              <p className="text-[1.2rem]">More</p>
+              <p className="text-[1.2rem] text-primary-color">LogOut</p>
             </li>
           </ul>
         </div>
@@ -179,7 +170,7 @@ export default function Sidebar({ action = () => {} }: { action?: any }) {
       <UploadPost
         show={isFileUploading}
         close={() => setFileUploading(false)}
-        image={choosedFile}
+        image={chooserFile}
         action={uploadPost}
       ></UploadPost>
     </>

@@ -8,13 +8,14 @@ export default function SearchBar({action = () => {}}: {action?: any}) {
   const searchInputRef = useRef<HTMLInputElement>(null);
   return (
     <div className="w-[500px] fixed top-10 flex justify-center items-center search-bar">
-      <div className="w-full flex items-center justify-between gap-5  bg-foreground-color px-2 pl-6 py-2 rounded-full relative">
+      <div className="w-full flex items-center justify-between gap-5 bg-foreground-color/50 px-1.5 pl-6 py-1.5 rounded-full relative">
         <input
           type="text"
           className="w-full h-full bg-transparent outline-none border-none "
           placeholder="Search here..."
           ref={searchInputRef}
           onChange={() => {
+            if (searchInputRef.current?.value == '') action('empty')
             action(searchInputRef.current?.value);
           }}
         />

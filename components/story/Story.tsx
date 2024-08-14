@@ -3,21 +3,21 @@ import React from "react";
 interface Story {
     username: string
     image: string
-    isOwener: boolean
+    isOwner: boolean
     isWatched: boolean
 }
 
-export default function Story({username, image, isOwener, isWatched = false}: Story) {
+export default function Story({username, image = "/default-user-pfp.png", isOwner: isOwner, isWatched = false}: Story) {
   return (
     <div className="story-wrapper w-[100px] flex flex-col gap-1 justify-center items-center">
-      <div className={`${isOwener ? 'self ': ''} story ${isOwener ? 'no-story ': 'active-story'}  w-[70px] h-[70px] flex-shrink-0 rounded-full p-[3px] outline outline-2 outline-offset-[-4px] outline-black ${isWatched ? 'watched' : ''}`}>
+      <div className={`${isOwner ? 'self ': ''} story ${isOwner ? 'no-story ': 'active-story'}  w-[70px] h-[70px] flex-shrink-0 rounded-full p-[4px] outline outline-2 outline-offset-[-5px] outline-background-color ${isWatched ? 'watched' : ''}`}>
         <img
           src={image}
           alt=""
           className="w-full h-full aspect-square rounded-full "
         />
       </div>
-      <p className="username">{isOwener ? 'Your story' : username}</p>
+      <p className="username">{isOwner ? 'Your story' : username}</p>
     </div>
   );
 }

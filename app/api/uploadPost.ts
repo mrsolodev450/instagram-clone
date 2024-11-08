@@ -31,13 +31,35 @@ type Post = {
   userId: number
 };
 
+let temp: Post[] = [{
+  id: 0,
+  userId: 0,
+  caption: "",
+  author: {
+    name: "",
+    username: "",
+    image: "",
+  },
+  timePosted: "",
+  image: "",
+  reactions: {
+    likes: 0,
+    comments: {
+      count: 0,
+      data: "null",
+    },
+    shares: 0,
+    saves: 0,
+  },
+  likedUser: [],
+}]
+
 export default function uploadPost(data: Post) {
 
   let FeedPosts: Post[] = GetData('feed-post')
   let UserPost: Post[] = []
 
   if (data.image == null || data.image == "") return;
-  let temp: any = {}
   
   const obj: Post = {
     id: data.id,
@@ -62,12 +84,10 @@ export default function uploadPost(data: Post) {
     likedUser: [],
   };
   
-  if (FeedPosts[0] !== temp) {
+  if (FeedPosts[0].userId != temp[0].userId) {
     FeedPosts.push(obj)
   } else FeedPosts = [obj]
 
-  SaveData("feed-post", FeedPosts);
-  // location.reload()
 }
 
 function SaveData(key: string, data: any) {
@@ -78,7 +98,7 @@ function SaveData(key: string, data: any) {
 
 function GetData(key: string) {
   if (typeof window !== "undefined") {
-    return JSON.parse(localStorage.getItem(key) ?? "[{}]");
+    return JSON.parse(localStorage.getItem(key) ?? JSON.stringify(temp));
   }
   
 

@@ -9,7 +9,7 @@ export default function DmLayout({
    
   return (
     <div>
-      <Sidebar />
+      <Sidebar type='ICON-ONLY'/>
       
       {children}
     </div>

@@ -25,13 +25,110 @@ import uploadPost from "@/app/api/uploadPost";
 import userData from "@/app/api/userData";
 import Item from "./Item";
 import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "@/app/lib/store/hooks";
+import { upload } from "@/app/lib/store/features/post/postSlice";
+import { addPost } from "@/app/lib/store/features/user/userSlice";
 
 
-export default function Sidebar() {
+
+type Author = {
+  name: string;
+  image: string;
+  username: string
+};
+
+type Comments = {
+  count: number;
+  data: string;
+};
+
+type Reactions = {
+  likes: number;
+  comments: Comments;
+  saves: number;
+  shares: number;
+};
+
+type Post = {
+  caption: string;
+  timePosted: string;
+  author: Author;
+  audio?: string;
+  image: string;
+  reactions: Reactions;
+  action?: any;
+  likedUser: string[]
+  id: number,
+  userId: number
+};
+
+
+export default function Sidebar({type = "FULL"}: {type?: "FULL" | "ICON-ONLY"}) {
   const [isFileChoosing, setFileChoosing] = useState(false);
   const [isFileUploading, setFileUploading] = useState(false);
   const [chooserFile, setChooserFile] = useState("");
+  const dispatch = useAppDispatch()
   const router = useRouter();
+  const user = userData.fetchUser()
+  const currentUser = useAppSelector(state => state.users.items)
+
+
+  const Items = [
+    {
+      type: "link",
+      path: "/",
+      title: "Home",
+      icon: <FiHome />,
+    },
+    {
+      type: "link",
+      path: "/search",
+      title: "Search",
+      icon: <FiSearch />,
+    },
+    {
+      type: "link",
+      path: "/explore",
+      title: "Explore",
+      icon: <FiCompass />,
+    },
+    {
+      type: "link",
+      path: "/reels",
+      title: "Reels",
+      icon: <FiPlayCircle />,
+    },
+    {
+      type: "link",
+      path: "/dm",
+      title: "Messages",
+      icon: <RiMessengerLine />,
+    },
+    {
+      type: "link",
+      path: "/notifications",
+      title: "Notification",
+      icon: <FiHeart />,
+    },
+    {
+      type: "normal",
+      title: "Create",
+      icon: <FiPlusCircle />,
+      action: () => {
+        setFileChoosing(true);
+      },
+    },
+    {
+      type: "link",
+      path: `/${currentUser.username}`,
+      title: "Profile",
+      icon: (
+        <PFP
+          image={currentUser.image}
+        />
+      ),
+    },
+  ];
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -52,111 +149,56 @@ export default function Sidebar() {
     router.replace("/login");
   }
 
-  const Items = [
-    {
-      id: 0,
-      type: "link",
-      path: "/",
-      title: "Home",
-      icon: <FiHome />,
-    },
-    {
-      id: 1,
-      type: "link",
-      path: "/search",
-      title: "Search",
-      icon: <FiSearch />,
-    },
-    {
-      id: 2,
-      type: "link",
-      path: "/explore",
-      title: "Explore",
-      icon: <FiCompass />,
-    },
-    {
-      id: 3,
-      type: "link",
-      path: "/dm",
-      title: "Messages",
-      icon: <RiMessengerLine />,
-    },
-    {
-      id: 4,
-      type: "link",
-      path: "/notifications",
-      title: "Notification",
-      icon: <FiHeart />,
-    },
-    {
-      id: 5,
-      type: "normal",
-      title: "Create",
-      icon: <FiPlusCircle />,
-      action: () => {
-        setFileChoosing(true);
-      },
-    },
-    {
-      id: 6,
-      type: "link",
-      path: `/@${userData.fetchUser() && userData.fetchUser().username}`,
-      title: "Profile",
-      icon: (
-        <PFP
-          image={
-            userData.fetchUser()
-              ? userData.fetchUser().image
-              : "/default-user-pfp.png"
-          }
-        />
-      ),
-    },
-  ];
+  function handleUploadPost(data: Post) {
+    dispatch(upload(data))
+    dispatch(addPost(data))
+    // uploadPost(data)
+  }
 
   return (
     <>
       <section className="h-full px-5 py-5 flex flex-col items-start justify-between sidebar">
         <div className="flex items-center justify-start text-[2.2rem] title">
-          <span className="title-icon text-[1.7rem] icon">
+          <span className={type != "FULL" ? "text-[1.7rem] text-secondary-color max-[1500px]:block" : "hidden text-[1.7rem] text-primery-color max-[1500px]:block"}>
             <FiInstagram />
           </span>
-          <span className="title-text">Instagram</span>
+
+          {type == "FULL" ? <span className="title-text">Instagram</span> : <></>}
         </div>
 
-        <ul className="h-[70%] flex flex-col items-center justify-start gap-5">
+        <ul className="h-[70%] flex flex-col items-start justify-start gap-5">
           {Items.map((item, index) => (
             <Item
-              id={item.id}
               type={item.type}
               path={item.path}
               key={index}
               title={item.title}
               icon={item.icon}
               action={item.action}
+              isIconOnly={type == "ICON-ONLY"}
             />
           ))}
         </ul>
 
         <div className="h-[10%] flex flex-col items-center justify-start">
           <ul className="h-[100%] flex flex-col items-center justify-start gap-2">
-            <li className="w-[200px] sidebar-item h-[40px] icon flex items-center justify-start gap-5">
+            <li className=" sidebar-item h-[40px] icon flex items-center justify-start gap-5">
               <Link href={"/settings"} className="w-full h-full flex items-center justify-start gap-5">
               <span className="text-[1.7rem]">
                 <FiSettings />
               </span>
-              <p className="text-[1.2rem] text-primary-color">Settings</p>
+              {type == "FULL" ? <p className="text-[1.2rem] text-primary-color">Settings</p> : <></>}
               </Link>
             </li>
 
             <li
-              className="w-[200px] sidebar-item h-[40px] icon flex items-center justify-start gap-5"
+              className=" sidebar-item h-[40px] icon flex items-center justify-start gap-5"
               onClick={logout}
             >
               <span className="text-[1.7rem]">
                 <FiLogOut />
               </span>
-              <p className="text-[1.2rem] text-primary-color">LogOut</p>
+              {type == "FULL" ? <p className="text-[1.2rem] text-primary-color">LogOut</p> : <></>}
             </li>
           </ul>
         </div>
@@ -171,7 +213,7 @@ export default function Sidebar() {
         show={isFileUploading}
         close={() => setFileUploading(false)}
         image={chooserFile}
-        action={uploadPost}
+        action={handleUploadPost}
       ></UploadPost>
     </>
   );

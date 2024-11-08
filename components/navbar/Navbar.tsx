@@ -7,8 +7,12 @@ import {
 import { useRouter } from "next/navigation";
 import Item from "./Item";
 import { RiMessengerLine } from "react-icons/ri";
+import HomeNavbar from "./HomeNavbar";
+import DMListNavbar from "./DMListNavbar";
+import ProfileNavbar from "./ProfileNavbar";
 
-export default function Navbar() {
+type ForType = 'HOME' | "DMList" | "PROFILE"
+export default function Navbar({title, type}: {title: string, type: ForType}) {
   const router = useRouter();
 
   const Items = [
@@ -24,32 +28,8 @@ export default function Navbar() {
     
   ];
 
-
-  return (
-    <>
-      <section className="w-full h-[50px] px-5 sticky left-0 top-0 bg-foreground-color flex items-center justify-between top-nav z-40">
-
-      <div className="flex items-center justify-start text-[2.2rem] gap-3">
-          <span className="title-icon text-[1.7rem] icon ic">
-            <FiInstagram />
-          </span>
-          <span className=" text-[1rem] font-bold">ChatApp</span>
-        </div>
-
-        <ul className=" flex items-center justify-center">
-          {Items.map((item, index) => (
-            <Item
-              key={index}
-              title={item.title}
-              icon={item.icon}
-              action={item.action}
-            />
-          ))}
-        </ul>
-
-        
-      </section>
-
-    </>
-  );
+  if (type === "HOME") return <HomeNavbar title={title}/>
+  else if (type === "DMList") return <DMListNavbar title={title}/>
+  else if (type === "PROFILE") return <ProfileNavbar title={title}/>
+  
 }

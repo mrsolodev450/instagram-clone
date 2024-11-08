@@ -47,10 +47,6 @@ type User = {
   password: string;
 };
 
-
-
-
-
 function fetchPost(key: string, userId: number) {
   let allPosts: Post[] = [];
   let userPosts: Post[] = [];
@@ -107,10 +103,10 @@ const UserList: User[] = [
     username: "knightwor_",
     name: "KnightWor",
     image: "/default-user-pfp.png",
-    followers: [],
+    followers: ["john", "mr.solodev"],
     following: [],
     country: "India",
-    bio: "Passinate Coder",
+    bio: "Web & App Developer, Writing Code To Unlock Hidden Possibilities.",
     password: "1234567890",
   },
 ];
@@ -129,7 +125,7 @@ const fetchUser = () => {
   };
 
   if (typeof window !== "undefined") {
-     user = JSON.parse(localStorage.getItem('logged-user') ?? '{}') ;
+     user = JSON.parse(localStorage.getItem('logged-user') ?? JSON.stringify(user)) ;
     }
     
     return user

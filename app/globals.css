@@ -87,11 +87,8 @@ body {
 
 .dm-list {
   width: 100%;
-  height: 100%;
+  overflow: hidden;
   background-color: rgb(var(--background-color) / 1);
-  position: fixed;
-  top: 0;
-  left: 0;
   display: none;
   justify-content: start;
   align-items: start;
@@ -102,13 +99,16 @@ body {
 .dm-sidebar {
   position: fixed;
   height: 100%;
-  padding: 20px 30px;
   background-color: rgb(var(--background-color) / 1);
   border-right: 1px solid rgb(var(--foreground-color) / 0.9);
 }
 
+.sidebar {
+  padding: 20px 30px;
+}
+
 .dm-sidebar {
-  left: 320px;
+  left: 150px;
   top: 0;
   bottom: 0;
   margin: auto 0;
@@ -121,16 +121,21 @@ body {
 
 .sidebar .pfp,
 .dm-sidebar .pfp,
-.bottom-nav .pfp .user-card .pfp,
+.bottom-nav .p,
 .upload-file-popup .pfp,
 .comment-section .pfp {
   width: 30px;
   height: 30px;
 }
 
+.chat-pg .pfp {
+  width: 50px;
+}
+
 .profile-pg .pfp {
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
+  max-width: min-content;
 }
 
 .sidebar-item {
@@ -233,7 +238,8 @@ body {
   border: 2px solid rgb(var(--background-color) / 1);
 }
 
-.msg-box::-webkit-scrollbar {
+.msg-box::-webkit-scrollbar,
+.notes::-webkit-scrollbar {
   width: 5px;
   display: none;
 }
@@ -283,10 +289,9 @@ input::-webkit-inner-spin-button {
   }
 }
 
-
 @media (max-width: 1500px) {
   .sidebar {
-    padding: 30px 20px;
+    padding: 30px 20px 30px 0;
   }
 
   .sidebar .sidebar-item p,
@@ -362,30 +367,6 @@ input::-webkit-inner-spin-button {
     width: 100%;
   }
 
-  .profile-pg {
-    padding: 20px 20px 150px 20px;
-  }
-
-  .profile-pg .pfp {
-    width: 80px;
-    height: 80px;
-  }
-
-  .profile-pg .bio .ctgry-info {
-    width: 100%;
-  }
-
-  .profile-pg .main-content,
-  .profile-pg .bio,
-  .profile-pg .post-prt {
-    width: 100%;
-  }
-
-  .profile-pg .post-prvw {
-    width: calc(100% / 3);
-    height: auto;
-  }
-
   .chat-pg .chat-top-nav,
   .chat-pg .chat-bottom-nav {
     width: 100%;
@@ -408,9 +389,6 @@ input::-webkit-inner-spin-button {
     display: block;
   }
 
-  .msg-box {
-    padding-bottom: 160px;
-  }
 }
 
 @media (max-width: 600px) {
@@ -428,8 +406,7 @@ input::-webkit-inner-spin-button {
     gap: 10px;
   }
 
-  .post .nav .pfp,
-  .user-card .pfp {
+  .post .nav .pfp {
     width: 32px;
     height: 32px;
   }
@@ -539,8 +516,8 @@ input::-webkit-inner-spin-button {
   }
 
   .profile-pg .pfp {
-    width: 50px;
-    height: 50px;
+    width: 150px;
+    height: 150px;
   }
 
   .profile-pg .ctgry-title {
@@ -584,6 +561,19 @@ input::-webkit-inner-spin-button {
   .upload-file-popup .post-dtl {
     height: 100%;
   }
+
+  .profile-pg .bio {
+    width: 100%;
+  }
+
+  .profile-pg .post-prt {
+    width: 100%;
+  }
+
+  .profile-pg .post-prvw {
+    width: calc(100% / 3);
+    height: auto;
+  }
 }
 
 @media (max-width: 750px) {
@@ -599,6 +589,21 @@ input::-webkit-inner-spin-button {
   .upload-file-popup .user-dtl {
     display: none;
   }
+
+
+  .profile-pg {
+    padding: 20px 20px 150px 20px;
+  }
+
+  .profile-pg .bio .ctgry-info {
+    width: 100%;
+  }
+
+  .profile-pg .main-content {
+    width: 100%;
+  }
+
+  
 }
 
 @media (max-width: 450px) {
@@ -629,11 +634,6 @@ input::-webkit-inner-spin-button {
 
   .profile-pg .main-content .content-counts .ccc {
     width: 30px;
-  }
-
-  .profile-pg .pfp {
-    width: 50px;
-    height: 50px;
   }
 
   .profile-pg .ctgry-title {
@@ -671,12 +671,22 @@ input::-webkit-inner-spin-button {
   }
 
   .chat-pg .pfp {
-    width: 32px;
-    height: 32px;
+    width: 45px;
+    height: 45px;
   }
 }
 
 @media (max-width: 500px) {
+  .profile-pg .main-content {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .profile-pg .pfp {
+    width: 70px;
+    height: 70px;
+  }
+  
   .upload-file-popup {
     width: 100%;
     height: 100%;

@@ -7,6 +7,10 @@ import { LuMessagesSquare } from 'react-icons/lu';
 import userData from '../api/userData';
 import DmList from '@/components/DmList';
 import BottomNavbar from '@/components/bottomnav/BottomNavbar';
+import Navbar from '@/components/navbar/Navbar';
+import { FiMessageSquare } from 'react-icons/fi';
+import { BiMessageAltDetail } from 'react-icons/bi';
+import { TbMessage2Off } from 'react-icons/tb';
 
 export default function DmPage() {
   
@@ -14,14 +18,15 @@ export default function DmPage() {
   return (
     <>
     <DmSidebar user={userData.UserList} />
+    <Navbar title='Messages' type='DMList'/>
     <DmList user={userData.UserList} />
-    <BottomNavbar />
+    {/* <BottomNavbar /> */}
     
-    <div className='dm-pg w-full h-[100vh] flex flex-col justify-center items-center gap-5'>
+    <div className='dm-pg max-[750px]:hidden w-full h-[100vh] flex flex-col justify-center items-center gap-5'>
       <span className="text-[15rem] text-foreground-color"> 
-      <LuMessagesSquare  />
+      <TbMessage2Off />
       </span>
-      <h1 className=' text-secondary-color text-[2rem] font-medium'>Open Chat To Start</h1>
+      <h1 className=' text-secondary-color/30 text-[1.7rem]'>Start New Chat</h1>
     </div>
     </>
   )

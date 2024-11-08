@@ -9,122 +9,45 @@ import { useEffect, useState } from "react";
 import userData from "./api/userData";
 import { redirect } from "next/navigation";
 import BottomNavbar from "@/components/bottomnav/BottomNavbar";
+import Navbar from "@/components/navbar/Navbar";
+import fetchPost from "./api/fetchPost";
+import { useAppSelector } from "./lib/store/hooks";
 
-interface Author {
-  name: string,
-  image: string
-}
-
-interface Comments {
-  count: number,
-  data: string
-}
-
-interface Reactions {
-  likes: number,
-  comments: Comments,
-  saves: number
-  shares: number
-}
-
-interface Post {
-  caption: string
-  timePosted: any
-  author: Author
-  audio?: string
-  image: string
-  reactions: Reactions,
-  action?: any
-  id: number
-}
 
 export default function Home() {
 
-  function getData(query: string, type: string) {
+  const user = userData.fetchUser()
+  const currentUser = useAppSelector(state => state.users.items)
 
-    if (typeof window !== "undefined") {
-      if (type === 'JSON') return JSON.parse(localStorage.getItem(query) ?? "[{}]");
-      if (type === 'Bool') return localStorage.getItem(query) ?? false;
-    }
+  const feed = useAppSelector(state => state.posts.items)
 
-    
-  }
-
-  const [FeedPost, UpdateFeedPost] = useState(getData("feed-post", 'JSON'));
-  const [HavePost, UpdateHavePost] = useState(getData("have-post", 'Bool'));
-
-  if (userData.fetchUser().username == undefined) {
+  if (user.username == undefined) {
     redirect("/login")
   }
+
+  // alert(JSON.stringify(feed[0]));
+  
 
   function postInteraction(id: any, interactionType: string) {
     let Id: number = parseInt(id) 
     
-    if (interactionType === 'del') deletePost(Id)
-    else if (interactionType === 'like') likePost(Id);
+    if (interactionType === 'like') console.log("liked");
     else if (interactionType === 'save') console.log('saved post to collection');
     else if (interactionType === 'share') console.log('shared post to xyz');
-    else if (interactionType === 'comment') commentOnPost(Id)
+    else if (interactionType === 'comment') console.log('commented!!')
   }
-
-  function deletePost(id: number) {
-    let TempPost: object[] = []
-    for (let index = 0; index < FeedPost.length; index++) {
-      if (index == id) {
-        continue
-      }
-      TempPost.push(FeedPost[index])
-    }
-    
-    let userChoice = confirm('Are you sure about to delete this post?')
-    if (userChoice) UpdateFeedPost(TempPost)
-    else console.log('Post delete canceled by owner!')
-  }
-
-  function likePost(id: number) {
-    let TempPost: any = JSON.parse(JSON.stringify(FeedPost))
-    
-    if (!TempPost[id].likedUser.includes(userData.fetchUser().username)) {
-      TempPost[id].reactions.likes += 1
-      TempPost[id].likedUser.push(userData.fetchUser().username)
-    }
-    else {
-      TempPost[id].reactions.likes -= 1
-      TempPost[id].likedUser.pop(userData.fetchUser().username)
-    }
-
-    UpdateFeedPost(TempPost)
-  }
-
-  function commentOnPost(id: number) {
-    let TempPost: any = JSON.parse(JSON.stringify(FeedPost))
-    
-    TempPost[id].reactions.comments.count += 1
-
-    UpdateFeedPost(TempPost)
-  }
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("feed-post", JSON.stringify(FeedPost));
-      localStorage.setItem("have-post", HavePost);
-    }
-    
-    
-  }, [FeedPost]);
 
   return (
-    <main className="flex h-screen items-center justify-between">
+    <main className="flex flex-col h-screen items-center justify-between">
       <Sidebar />
+      <Navbar title="Instagram" type="HOME" />
       <BottomNavbar />
 
       <Feed>
         <Stories>
           <Story
-            username={userData.fetchUser().username}
-            image={userData.fetchUser()
-              ? userData.fetchUser().image
-              : "/default-user-pfp.png"}
+            username={currentUser.username}
+            image={currentUser.image}
             isOwner={true}
             isWatched={false}
           />
@@ -132,31 +55,30 @@ export default function Home() {
             username={userData.UserList[2].username}
             image={userData.UserList[2].image}
             isOwner={false}
-            isWatched={true}
+            isWatched={false}
           />
           <Story
             username={userData.UserList[1].username}
             image={userData.UserList[1].image}
             isOwner={false}
-            isWatched={false}
+            isWatched={true}
           />
         </Stories>
 
-        {FeedPost && HavePost
-          ? FeedPost.map((item: any, index: any) => (
+        { feed.map((item: any, index: any) => (
               <Post
+                userId={item.userId}
                 key={index}
                 caption={item.caption}
                 timePosted={item.timePosted}
                 author={item.author}
                 image={item.image}
-                reactions={item.reactions}
                 action={postInteraction}
                 id={index}
                 likedUser={item.likedUser}
               />
             ))
-          : ""}
+          }
       </Feed>
 
 

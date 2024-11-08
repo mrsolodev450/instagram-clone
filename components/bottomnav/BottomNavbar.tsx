@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { FiHome, FiPlusCircle, FiSearch } from "react-icons/fi";
+import { FiHome, FiPlayCircle, FiPlusCircle, FiSearch } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import userData from "@/app/api/userData";
 import uploadPost from "@/app/api/uploadPost";
@@ -40,10 +40,10 @@ export default function BottomNavbar() {
       },
     },
     {
-      title: "Notification",
-      icon: <IoMdNotificationsOutline />,
+      title: "Reels",
+      icon: <FiPlayCircle />,
       action: () => {
-        router.replace("/notifications");
+        router.replace("/reels");
       },
     },
     {
@@ -58,7 +58,7 @@ export default function BottomNavbar() {
         />
       ),
       action: () => {
-        router.replace(`/@${userData.User.username}`);
+        router.replace(`/${userData.User.username}`);
       },
     },
   ];
@@ -71,7 +71,7 @@ export default function BottomNavbar() {
 
   return (
     <>
-      <section className="w-full h-[50px] px-1 fixed left-0 bottom-0 z-50 bg-foreground-color flex items-center justify-center bottom-nav">
+      <section className="w-full h-[50px] px-1 fixed left-0 bottom-0 z-50 bg-background-color border-t border-t-foreground-color/50 flex items-center justify-center bottom-nav">
         <ul className="w-[80%] flex items-center justify-between">
           {Items.map((item, index) => (
             <Item

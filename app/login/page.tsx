@@ -8,6 +8,8 @@ import { useFormState } from "react-dom";
 import userData from "../api/userData";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useAppDispatch } from "../lib/store/hooks";
+import { switchUser } from "../lib/store/features/user/userSlice";
 
 type User = {
   username: string;
@@ -22,6 +24,7 @@ export default function LoginPage() {
   const pswdRef = useRef<HTMLInputElement>(null);
   const errorMessageRef = useRef<HTMLParagraphElement>(null)
   const router = useRouter();
+  const dispatch = useAppDispatch()
 
 
   function handleFormSubmit(e: FormEvent<HTMLFormElement>) {
@@ -53,6 +56,7 @@ export default function LoginPage() {
         pswdRef.current.value == crntUser.password
       ) {
         saveUser(crntUser);
+        dispatch(switchUser(crntUser))
         router.replace("/");
       } else setShowErrorMessage(true);
     }
@@ -69,7 +73,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="w-[100vw] h-[100vh] flex flex-col items-center justify-center">
+    <div className="w-[100vw] h-[100vh] flex flex-col items-center justify-center max-[350px]:justify-start max-[350px]:pt-[100px]">
       <form
         onSubmit={handleFormSubmit}
         className="login-form w-[300px] h-[400px] flex flex-col justify-start py-10 items-center gap-3 p-5 rounded-md bg-accent-3 border-2 border-foreground-color/40"

@@ -6,6 +6,8 @@ import PostImage from "./PostImage";
 import PostCaption from "./PostCaption";
 import PFP from "../ui/PFP";
 import userData from "@/app/api/userData";
+import { Post } from "@/app/lib/store/features/post/postSlice";
+import { useAppSelector } from "@/app/lib/store/hooks";
 
 type UploadPost = {
   action?: any;
@@ -22,6 +24,8 @@ export default function UploadPost({
 }: UploadPost) {
   const [caption, setCaption] = useState("");
   const FeedPosts = GetData('feed-post')
+  const user = userData.fetchUser()
+  const currentUser = useAppSelector(state => state.users.items)
 
   function getCaption(val: string) {
     setCaption(val);
@@ -35,22 +39,18 @@ export default function UploadPost({
   }
 
   function postData() {
-    const obj = {
+    const obj: Post = {
       caption: caption,
       timePosted: getCurrentTime(),
       image: image ? image : '',
-      reactions: {
-        likes: 0,
-        comments: {
-          count: 0,
-          data: "null",
-        },
-        shares: 0,
-        saves: 0,
-      },
       likedUser: [],
       id: (FeedPosts.length - 1) * userData.fetchUser().userId,
-      userId: userData.fetchUser().userId
+      userId: userData.fetchUser().userId,
+      author: {
+        name: currentUser.name,
+        image: currentUser.image,
+        username: currentUser.username
+      }
     };
     action(obj);
 
@@ -62,7 +62,7 @@ export default function UploadPost({
     const MonthNames = ["Jan", "Feb", "March", "May", "Jun", "July", "Aug", "Nov", "Dec"]
 
     let time = new Date(Date.now())
-    let hours: any
+    let hours: any = time.getHours()
     let minutes = time.getMinutes() 
     let date = time.getDate()
     let month = MonthNames[time.getMonth() - 1]

@@ -8,7 +8,7 @@ export default function SearchBar({action = () => {}}: {action?: any}) {
   const searchInputRef = useRef<HTMLInputElement>(null);
   return (
     <div className="w-[500px] fixed top-10 flex justify-center items-center search-bar">
-      <div className="w-full flex items-center justify-between gap-5 bg-foreground-color/50 px-1.5 pl-6 py-1.5 rounded-full relative">
+      <div className="w-full flex items-center justify-between gap-5 bg-foreground-color/40 border border-foreground-color px-1.5 pl-6 py-1.5 rounded-[13px] relative">
         <input
           type="text"
           className="w-full h-full bg-transparent outline-none border-none "
@@ -21,7 +21,7 @@ export default function SearchBar({action = () => {}}: {action?: any}) {
         />
         <ul className="flex justify-center items-center gap-5 text-secondary-color text-[1.3rem]">
           <li
-            className=" bg-royalblue text-[#fff] px-4 pr-[16px] py-2 rounded-full transition-all active:scale-95 cursor-pointer"
+            className=" bg-royalblue text-[#fff] px-4 pr-[16px] py-2 rounded-[7px] transition-all active:scale-95 cursor-pointer"
             onClick={() => {
               action(searchInputRef.current?.value);
             }}

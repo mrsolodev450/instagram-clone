@@ -7,7 +7,7 @@ type Item = {
   action?: any;
   icon: React.ReactNode;
   path?: string;
-  id: number
+  isIconOnly?: boolean;
 };
 
 export default function Item({
@@ -15,35 +15,45 @@ export default function Item({
   title,
   icon,
   path = "/",
+  isIconOnly = false,
   action = () => {},
-  id,
 }: Item) {
+  const itemTitleWidth = {
+    width: isIconOnly ? 0 : "200px",
+  };
   if (type == "normal")
     return (
-      <div className=" sidebar-item">
+      <div className="sidebar-item">
         <li
-          className="w-[200px] sidebar-item h-[40px] icon flex items-center justify-start gap-5"
+          className=" h-[40px] icon flex items-center justify-start gap-5"
           onClick={() => action()}
         >
           <span className="ic text-[1.7rem]">{icon}</span>
-          <p className="text-[1.2rem] text-primary-color">{title}</p>
+          {!isIconOnly ? (
+            <p className="text-[1.2rem] text-primary-color">{title}</p>
+          ) : (
+            <></>
+          )}
         </li>
       </div>
     );
   else
     return (
-      <div className=" sidebar-item">
+      <div className="sidebar-item">
         <li
-          className="w-[200px] sidebar-item h-[40px] icon flex items-center justify-start gap-5" id={`${id}`}
+          className="h-[40px] icon flex items-center justify-start gap-5"
           onClick={() => action()}
         >
           <Link
             className="w-full h-full flex items-center justify-start gap-5"
             href={path}
-            
           >
             <span className="ic text-[1.7rem]">{icon}</span>
-            <p className="text-[1.2rem] text-primary-color">{title}</p>
+            {!isIconOnly ? (
+              <p className="text-[1.2rem] text-primary-color">{title}</p>
+            ) : (
+              <></>
+            )}
           </Link>
         </li>
       </div>

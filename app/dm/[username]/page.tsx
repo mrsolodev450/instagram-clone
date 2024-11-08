@@ -80,8 +80,9 @@ export default function DmPage({ params }: { params: { username: string } }) {
     }
 
     if (msgBoxRef.current) {
-      msgBoxRef.current.scrollBy({
-        top: 1000000,
+      msgBoxRef.current.scrollTo({
+        top: msgBoxRef.current.scrollHeight,
+        behavior: 'smooth',
       });
     }
   }
@@ -100,7 +101,7 @@ export default function DmPage({ params }: { params: { username: string } }) {
     <>
       <DmSidebar user={userData.UserList} />
       {user.username === username ? (
-        <div className="chat-pg w-full h-[100vh] flex justify-center px-5 items-center gap-5">
+        <div className="chat-pg w-full h-[100dvh] flex justify-center max-[1350px]:justify-end max-[1350px]:pr-[30px] px-5 items-center gap-5">
           <div className="chat-top-nav w-[500px] h-full relative flex flex-col items-center justify-end">
             <div className="nav-box fixed top-[0px] pt-5 flex flex-col justify-center items-center z-40 gap-5 bg-background-color">
               <nav className="w-[500px] flex items-center justify-between gap-5 bg-background-color px-4  py-3 ">
@@ -112,9 +113,7 @@ export default function DmPage({ params }: { params: { username: string } }) {
                     <FiChevronLeft />
                   </Link>
 
-                  <Link href={`/@${user.username}`}>
-                    <PFP image={user.image} />
-                  </Link>
+                    <PFP image={user.image} size={100} />
                   <div>
                     <p className=" whitespace-nowrap text-ellipsis w-[300px] cursor-pointer">
                       {user.name}
@@ -128,14 +127,14 @@ export default function DmPage({ params }: { params: { username: string } }) {
             </div>
 
             <div
-              className="w-[500px] relative flex flex-col items-center justify-start py-[100px] gap-5 overflow-y-auto msg-box"
+              className="w-[500px] relative flex flex-col items-center justify-start gap-5 pb-[100px] overflow-y-auto msg-box"
               ref={msgBoxRef}
             >
               {isMessaged ? (
                 msg.map((item, index) => (
                   <div
                     key={index}
-                    className="w-full flex-shrink-0 px-5 flex justify-end items-center sended-msg"
+                    className="w-full flex-shrink-0 px-2 flex justify-end items-center sended-msg"
                   >
                     <p className="break-words px-5 rounded-[25px] font-medium max-w-[300px] bg-royalblue text-white py-2">
                       {item.msg}

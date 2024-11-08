@@ -25,7 +25,7 @@ export default function UserCard({ user }: UserCard) {
   }
 
   function openProfile() {
-    router.push(`/@${user.username}`)
+    router.push(`/${user.username}`)
   }
 
 
@@ -50,9 +50,9 @@ export default function UserCard({ user }: UserCard) {
           </p>
         </div>
       </div>
-      {userData.fetchUser() && user.username !== userData.fetchUser().username ? <ul className=" flex justify-end items-center gap-5 text-[1rem] actn-btn">
+      {userData.fetchUser() && user.username !== userData.fetchUser().username ? <ul className=" flex justify-end items-center gap-5 text-[0.9rem] actn-btn">
         <li
-          className="px-4 pr-[16px] py-2 flex gap-2 items-center justify-center rounded-full transition-transform active:scale-95 cursor-pointer"
+          className="px-4 pr-[16px] py-2 flex gap-2 items-center justify-center rounded-[13px] transition-transform active:scale-95 cursor-pointer"
           style={style}
           onClick={followUser}
         >

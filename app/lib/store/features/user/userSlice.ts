@@ -24,7 +24,7 @@ const initialState: userState = {
     userId: 12345678,
     username: "knightwor_",
     name: "KnightWor",
-    image: "/pfp.png",
+    image: "/murari.jpg",
     followers: ["john", "mr.solodev"],
     following: [],
     country: "India",

@@ -35,6 +35,12 @@ type Post = {
   userId: number;
 };
 
+type Story = {
+  author: Author
+  content: string
+  time: string
+}
+
 type User = {
   name: string;
   username: string;
@@ -45,6 +51,7 @@ type User = {
   country: string;
   bio: string;
   password: string;
+  stories?: Story[]
 };
 
 function fetchPost(key: string, userId: number) {
@@ -75,17 +82,37 @@ const UserList: User[] = [
     country: "India",
     password: "12345678",
     bio: "Just A Coder",
+    stories: [
+      {
+        author: {
+          name: "harry",
+          image: "/default-user-pfp.png"
+        },
+        content: "Bankai",
+        time: "5sec ago"
+      }
+    ]
   },
   {
     userId: 123456780,
     username: "mr.solodev",
     name: "Mr Solo Dev",
-    image: "/default-user-pfp.png",
+    image: "/pfp3.jpg",
     followers: [],
     following: [],
     country: "India",
     password: "87654321",
     bio: "Coder | Youtuber",
+    stories: [
+      {
+        author: {
+          name: "mr.solodev",
+          image: "/pfp3.jpg"
+        },
+        content: "Yaruna",
+        time: "5sec ago"
+      }
+    ]
   },
   {
     userId: 123456786,
@@ -97,17 +124,37 @@ const UserList: User[] = [
     country: "India",
     password: "123456789",
     bio: "Gym Lover",
+    stories: [
+      {
+        author: {
+          name: "john",
+          image: "/default-user-pfp.png"
+        },
+        content: "Yokoso",
+        time: "5sec ago"
+      }
+    ]
   },
   {
     userId: 12345678,
     username: "knightwor_",
     name: "KnightWor",
-    image: "/default-user-pfp.png",
+    image: "/murari.jpg",
     followers: ["john", "mr.solodev"],
-    following: [],
+    following: ["mr.solodev", "john"],
     country: "India",
     bio: "Web & App Developer, Writing Code To Unlock Hidden Possibilities.",
     password: "1234567890",
+    stories: [
+      {
+        author: {
+          name: "knightwor_",
+          image: "/murari.jpg"
+        },
+        content: "Yowaimo",
+        time: "5sec ago"
+      }
+    ]
   },
 ];
 
@@ -122,6 +169,16 @@ const fetchUser = () => {
     country: "",
     bio: "",
     password: "",
+    stories: [
+      {
+        author: {
+          name: "",
+          image: "/default-user-pfp.png"
+        },
+        content: "",
+        time: ""
+      }
+    ]
   };
 
   if (typeof window !== "undefined") {
@@ -132,8 +189,18 @@ const fetchUser = () => {
   
 }
 
+function findUser(username: string): any {
+  let tempUser
+
+  UserList.forEach(user => {
+    if (user.username == username)
+      tempUser = user    
+  })
+
+  return tempUser
+}
 
 const User: User = fetchUser()
 
 
-export default { User, UserList, fetchPost, fetchUser };
+export default { User, UserList, fetchPost, fetchUser, findUser };

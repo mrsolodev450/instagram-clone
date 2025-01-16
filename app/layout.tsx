@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <StoreProvider>
-        <body className="system-scheme" suppressHydrationWarning>{children}</body>
+        <body className="light-scheme" suppressHydrationWarning>{children}</body>
       </StoreProvider>
     </html>
   );

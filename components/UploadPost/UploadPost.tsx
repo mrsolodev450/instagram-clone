@@ -65,7 +65,7 @@ export default function UploadPost({
     let hours: any = time.getHours()
     let minutes = time.getMinutes() 
     let date = time.getDate()
-    let month = MonthNames[time.getMonth() - 1]
+    let month = MonthNames[time.getMonth()]
     let year = time.getFullYear()
     let AoP = time.getHours() <= 12 ? "AM" : "PM"
 

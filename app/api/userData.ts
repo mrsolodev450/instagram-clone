@@ -109,7 +109,7 @@ const UserList: User[] = [
           name: "mr.solodev",
           image: "/pfp3.jpg"
         },
-        content: "Yaruna",
+        content: "/vid1.mp4",
         time: "5sec ago"
       }
     ]
@@ -130,7 +130,7 @@ const UserList: User[] = [
           name: "john",
           image: "/default-user-pfp.png"
         },
-        content: "Yokoso",
+        content: "/story2.jpg",
         time: "5sec ago"
       }
     ]
@@ -151,7 +151,7 @@ const UserList: User[] = [
           name: "knightwor_",
           image: "/murari.jpg"
         },
-        content: "Yowaimo",
+        content: "/story3.jpg",
         time: "5sec ago"
       }
     ]

@@ -1,5 +1,6 @@
 "use client";
 
+import { Search } from "iconoir-react";
 import { useRouter } from "next/navigation";
 import React, { useRef } from "react";
 import { FiSearch } from "react-icons/fi";
@@ -26,7 +27,7 @@ export default function SearchBar({action = () => {}}: {action?: any}) {
               action(searchInputRef.current?.value);
             }}
           >
-            <FiSearch />
+            <Search width={23} height={23} strokeWidth={1.5}/>
           </li>
         </ul>
       </div>

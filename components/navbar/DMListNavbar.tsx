@@ -2,6 +2,7 @@ import React from 'react'
 import { FiArrowDownLeft, FiArrowLeft, FiEdit, FiInstagram } from 'react-icons/fi'
 import Item from './Item';
 import { useRouter } from 'next/navigation';
+import { ArrowLeft } from 'iconoir-react';
 
 type Item = {
     title: string;
@@ -31,7 +32,7 @@ export default function DMListNavbar({title}: {title: string}) {
               <span className="title-icon text-[1.7rem] icon ic" onClick={
                 () => router.push('/')
               }>
-                <FiArrowLeft />
+                <ArrowLeft width={20} height={20} strokeWidth={1.5}/>
               </span>
               <span className=" text-[1rem] font-bold">{title}</span>
             </div>

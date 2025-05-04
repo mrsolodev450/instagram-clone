@@ -56,7 +56,7 @@ export default function UserCard({ user }: UserCard) {
           style={style}
           onClick={followUser}
         >
-          <span>{isFollowing ? <FiUserCheck /> : <FiUserPlus />}</span>
+          {/* <span>{isFollowing ? <FiUserCheck /> : <FiUserPlus />}</span> */}
           <span className=" font-medium">
             {isFollowing ? "Following" : "Follow"}
           </span>

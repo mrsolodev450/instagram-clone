@@ -10,6 +10,7 @@ import Item from "./Item";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import UploadPost from "../UploadPost/UploadPost";
 import ChooseFile from "../UploadPost/ChooseFile";
+import { ChatLines, Facetime, Heart, Home, HomeAlt, HomeSimpleDoor, HouseRooms, Instagram, MediaVideo, PlusCircle, Search, Settings, VideoCamera, ViewGrid } from "iconoir-react";
 
 export default function BottomNavbar() {
   const [isFileChoosing, setFileChoosing] = useState(false);
@@ -20,28 +21,28 @@ export default function BottomNavbar() {
   const Items = [
     {
       title: "Home",
-      icon: <FiHome />,
+      icon: <HomeSimpleDoor width={28} height={28} strokeWidth={1.5}/>,
       action: () => {
         router.replace(`/`);
       },
     },
     {
       title: "Search",
-      icon: <FiSearch />,
+      icon: <Search width={28} height={28} strokeWidth={1.5}/>,
       action: () => {
         router.replace(`/search`);
       },
     },
     {
       title: "Create",
-      icon: <FiPlusCircle />,
+      icon: <PlusCircle width={28} height={28} strokeWidth={1.5}/>,
       action: () => {
         setFileChoosing(true);
       },
     },
     {
       title: "Reels",
-      icon: <FiPlayCircle />,
+      icon: <Facetime width={28} height={28} strokeWidth={1.5}/>,
       action: () => {
         router.replace("/reels");
       },

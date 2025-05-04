@@ -11,6 +11,7 @@ import {
 import { LiaUserLockSolid } from "react-icons/lia";
 import GetTheme from "../api/getTheme";
 import BottomNavbar from "@/components/bottomnav/BottomNavbar";
+import { Lock, NavArrowRight, User } from "iconoir-react";
 
 
 export default function SettingsPage() {
@@ -46,7 +47,7 @@ export default function SettingsPage() {
           <div className="w-[450px] max-[550px]:w-full flex items-center justify-between gap-6 rounded-[30px] transition-all">
             <div className="flex items-center justify-center gap-6 w-full cursor-pointer">
               <span className="text-[1.6rem] text-secondary-color">
-                <FiLock />
+                 <Lock width={30} height={30} strokeWidth={1.5}/>
               </span>
               <div className="flex w-full flex-col items-center justify-center">
                 <h2 className="whitespace-nowrap text-ellipsis overflow-hidden max-[550px]:w-full w-[200px]">
@@ -56,7 +57,7 @@ export default function SettingsPage() {
             </div>
             <ul className="flex w-full justify-end items-center gap-5 text-[1rem]">
               <li className=" flex items-center justify-center text-[1.6rem] text-secondary-color rounded-full transition-transform active:scale-95 cursor-pointer">
-                <FiChevronRight />
+                 <NavArrowRight width={30} height={30} strokeWidth={1.5}/>
               </li>
             </ul>
           </div>
@@ -64,7 +65,7 @@ export default function SettingsPage() {
           <div className="w-[450px] max-[550px]:w-full flex items-center justify-between gap-6 rounded-[30px] transition-all">
             <div className="flex items-center justify-center gap-6 w-full cursor-pointer">
               <span className="text-[1.6rem] text-secondary-color">
-                <FiUser />
+                 <User width={30} height={30} strokeWidth={1.5}/>
               </span>
               <div className="flex w-full flex-col items-center justify-center">
                 <h2 className="whitespace-nowrap text-ellipsis overflow-hidden max-[550px]:w-full w-[200px]">
@@ -74,7 +75,7 @@ export default function SettingsPage() {
             </div>
             <ul className="flex w-full justify-end items-center gap-5 text-[1rem]">
               <li className=" flex items-center justify-center text-[1.6rem] text-secondary-color rounded-full transition-transform active:scale-95 cursor-pointer">
-                <FiChevronRight />
+                 <NavArrowRight width={30} height={30} strokeWidth={1.5}/>
               </li>
             </ul>
           </div>

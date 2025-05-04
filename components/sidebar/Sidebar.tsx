@@ -28,6 +28,7 @@ import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/app/lib/store/hooks";
 import { upload } from "@/app/lib/store/features/post/postSlice";
 import { addPost } from "@/app/lib/store/features/user/userSlice";
+import { ChatLines, Facetime, Heart, Home, HomeAlt, HomeSimpleDoor, HouseRooms, Instagram, MediaVideo, PlusCircle, Search, Settings, VideoCamera, ViewGrid } from "iconoir-react";
 
 
 
@@ -78,42 +79,50 @@ export default function Sidebar({type = "FULL"}: {type?: "FULL" | "ICON-ONLY"}) 
       type: "link",
       path: "/",
       title: "Home",
-      icon: <FiHome />,
+      icon: <HomeSimpleDoor width={30} height={30} strokeWidth={1.5}/>,
     },
     {
       type: "link",
       path: "/search",
       title: "Search",
-      icon: <FiSearch />,
+      icon: <Search width={30} height={30} strokeWidth={1.5}/>,
     },
     {
       type: "link",
       path: "/explore",
       title: "Explore",
-      icon: <FiCompass />,
+      icon: <ViewGrid width={30} height={30} strokeWidth={1.5}/>,
     },
     {
-      type: "link",
-      path: "/reels",
+      type: "normal",
       title: "Reels",
-      icon: <FiPlayCircle />,
+      icon: <Facetime width={30} height={30} strokeWidth={1.5}/>,
+      action: () => {
+        let reelId: string = "";
+        let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        for (let i = 0; i < 6; i++) {
+          reelId += chars[Math.floor(Math.random() * chars.length)]
+        }
+        router.replace(`/reels/${reelId}`)
+      }
     },
     {
       type: "link",
       path: "/dm",
       title: "Messages",
-      icon: <RiMessengerLine />,
+      icon: <ChatLines width={30} height={30} strokeWidth={1.5}/>,
     },
     {
       type: "link",
       path: "/notifications",
       title: "Notification",
-      icon: <FiHeart />,
+      icon: <Heart width={30} height={30} strokeWidth={1.5}/>,
     },
     {
       type: "normal",
       title: "Create",
-      icon: <FiPlusCircle />,
+      icon: <PlusCircle width={30} height={30} strokeWidth={1.5}/>,
       action: () => {
         setFileChoosing(true);
       },
@@ -160,7 +169,7 @@ export default function Sidebar({type = "FULL"}: {type?: "FULL" | "ICON-ONLY"}) 
       <section className="h-full px-5 py-5 flex flex-col items-start justify-between sidebar">
         <div className="flex items-center justify-start text-[2.2rem] title">
           <span className={type != "FULL" ? "text-[1.7rem] text-secondary-color max-[1500px]:block" : "hidden text-[1.7rem] text-primery-color max-[1500px]:block"}>
-            <FiInstagram />
+            <Instagram width={30} height={30} strokeWidth={1.5}/>
           </span>
 
           {type == "FULL" ? <span className="title-text">Instagram</span> : <></>}
@@ -185,7 +194,7 @@ export default function Sidebar({type = "FULL"}: {type?: "FULL" | "ICON-ONLY"}) 
             <li className=" sidebar-item h-[40px] icon flex items-center justify-start gap-5">
               <Link href={"/settings"} className="w-full h-full flex items-center justify-start gap-5">
               <span className="text-[1.7rem]">
-                <FiSettings />
+                <Settings width={30} height={30} strokeWidth={1.5}/>
               </span>
               {type == "FULL" ? <p className="text-[1.2rem] text-primary-color">Settings</p> : <></>}
               </Link>

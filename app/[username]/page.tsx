@@ -23,6 +23,7 @@ import Navbar from "@/components/navbar/Navbar";
 import { useAppDispatch, useAppSelector } from "../lib/store/hooks";
 import { remove } from "../lib/store/features/post/postSlice";
 import { changeImage, removePost } from "../lib/store/features/user/userSlice";
+import { Edit, EditPencil, Facetime, ViewGrid } from "iconoir-react";
 
 type User = {
   name: string;
@@ -189,9 +190,9 @@ export default function Profile({ params }: { params: { username: string } }) {
                         style={style}
                         onClick={followUser}
                       >
-                        <span>
+                        {/* <span>
                           {isFollowing ? <FiUserCheck /> : <FiUserPlus />}
-                        </span>
+                        </span> */}
                         <span className=" font-medium">
                           {isFollowing ? "Following" : "Follow"}
                         </span>
@@ -208,9 +209,9 @@ export default function Profile({ params }: { params: { username: string } }) {
                         }}
                         onClick={openDm}
                       >
-                        <span>
+                        {/* <span>
                           <FiSend />
-                        </span>
+                        </span> */}
                         <span className=" font-medium">Message</span>
                       </li>
                     ) : (
@@ -220,7 +221,7 @@ export default function Profile({ params }: { params: { username: string } }) {
                       <li
                         className="px-4 pr-[16px] py-2 flex gap-2 items-center justify-center rounded-[13px] transition-all active:scale-95 cursor-pointer"
                         style={{
-                          backgroundColor: "rgb(var(--foreground-color) / 1)",
+                          // backgroundColor: "rgb(var(--foreground-color) / 1)",
                           color: "rgb(var(--secondary-color)",
                         }}
                         onClick={() => {
@@ -228,9 +229,9 @@ export default function Profile({ params }: { params: { username: string } }) {
                         }}
                       >
                         <span>
-                          <FiEdit />
+                          <EditPencil width={25} height={25} strokeWidth={1.5}/>
                         </span>
-                        <span className=" font-medium">Edit</span>
+                        {/* <span className=" font-medium">Edit</span> */}
                       </li>
                     ) : (
                       <></>
@@ -288,14 +289,14 @@ export default function Profile({ params }: { params: { username: string } }) {
             <div className="w-full flex items-center justify-center gap-10 border-t border-t-foreground-color/50 py-3">
               <h1 className="ctgry-title cursor-pointer text-primary-color text-[1.2rem] flex items-center justify-start gap-2 font-semibold">
                 <span>
-                  <FiGrid />
+                  <ViewGrid width={30} height={30} strokeWidth={1.5}/>
                 </span>
                 Posts
               </h1>
 
               <h1 className="ctgry-title cursor-pointer text-secondary-color text-[1.2rem] flex items-center justify-start gap-2 font-semibold">
                 <span>
-                  <FiPlayCircle />
+                  <Facetime width={30} height={30} strokeWidth={1.5}/>
                 </span>
                 Reels
               </h1>

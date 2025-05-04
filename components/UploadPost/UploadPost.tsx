@@ -23,9 +23,9 @@ export default function UploadPost({
   show = false,
 }: UploadPost) {
   const [caption, setCaption] = useState("");
-  const FeedPosts = GetData('feed-post')
-  const user = userData.fetchUser()
-  const currentUser = useAppSelector(state => state.users.items)
+  const FeedPosts = GetData("feed-post");
+  const user = userData.fetchUser();
+  const currentUser = useAppSelector((state) => state.users.items);
 
   function getCaption(val: string) {
     setCaption(val);
@@ -35,48 +35,53 @@ export default function UploadPost({
     if (typeof window !== "undefined") {
       return JSON.parse(localStorage.getItem(key) ?? "[{}]");
     }
-  
   }
 
   function postData() {
     const obj: Post = {
       caption: caption,
       timePosted: getCurrentTime(),
-      image: image ? image : '',
+      image: image ? image : "",
       likedUser: [],
       id: (FeedPosts.length - 1) * userData.fetchUser().userId,
       userId: userData.fetchUser().userId,
       author: {
         name: currentUser.name,
         image: currentUser.image,
-        username: currentUser.username
-      }
+        username: currentUser.username,
+      },
     };
     action(obj);
 
     close();
-    
   }
 
   function getCurrentTime() {
-    const MonthNames = ["Jan", "Feb", "March", "May", "Jun", "July", "Aug", "Nov", "Dec"]
+    const MonthNames = [
+      "Jan",
+      "Feb",
+      "March",
+      "May",
+      "Jun",
+      "July",
+      "Aug",
+      "Nov",
+      "Dec",
+    ];
 
-    let time = new Date(Date.now())
-    let hours: any = time.getHours()
-    let minutes = time.getMinutes() 
-    let date = time.getDate()
-    let month = MonthNames[time.getMonth()]
-    let year = time.getFullYear()
-    let AoP = time.getHours() <= 12 ? "AM" : "PM"
+    let time = new Date(Date.now());
+    let hours: any = time.getHours();
+    let minutes = time.getMinutes();
+    let date = time.getDate();
+    let month = MonthNames[time.getMonth()];
+    let year = time.getFullYear();
+    let AoP = time.getHours() <= 12 ? "AM" : "PM";
 
-    if (time.getHours() > 12) 
-      hours = time.getHours() - 12
+    if (time.getHours() > 12) hours = time.getHours() - 12;
 
-    if (hours < 10)
-      hours = `0${hours}`
+    if (hours < 10) hours = `0${hours}`;
 
-    return `${date} ${month} ${year}, ${hours}:${minutes} ${AoP}`
-    
+    return `${date} ${month} ${year}, ${hours}:${minutes} ${AoP}`;
   }
 
   if (show)
@@ -94,7 +99,13 @@ export default function UploadPost({
             <PostImage image={image ? image : ""} />
             <div className="h-[500px] overflow-auto flex flex-col items-center justify-start gap-3  py-3 px-2 post-dtl">
               <div className="user-dtl flex items-center justify-start gap-4 w-full">
-                <PFP image={userData.fetchUser() ? userData.fetchUser().image : "/default-user-pfp.png"} />
+                <PFP
+                  image={
+                    userData.fetchUser()
+                      ? userData.fetchUser().image
+                      : "/default-user-pfp.png"
+                  }
+                />
                 <h1 className="text-[.9rem] flex items-center justify-start gap-1">
                   {userData.fetchUser().name}
                 </h1>

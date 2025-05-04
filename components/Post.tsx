@@ -29,6 +29,13 @@ import userData from "@/app/api/userData";
 import style from "styled-jsx/style";
 import { like, type Post } from "@/app/lib/store/features/post/postSlice";
 import { useAppDispatch, useAppSelector } from "@/app/lib/store/hooks";
+import {
+  Bookmark,
+  ChatLines,
+  Heart,
+  HeartSolid,
+  SendDiagonal,
+} from "iconoir-react";
 
 type User = {
   name: string;
@@ -55,21 +62,23 @@ export default function Post({
   likedUser = [],
 }: Post) {
   const PostRef = useRef<HTMLDivElement>(null);
-  
+
   const router = useRouter();
   const UserList = userData.UserList;
   const loggedInUser: User = userData.fetchUser();
   const user: User = getUser();
   const [isFollowing, setFollowing] = useState(
     user.followers.includes(loggedInUser.username) ||
-    loggedInUser.following.includes(author.username)
+      loggedInUser.following.includes(author.username),
   );
-  
+
   const dispatch = useAppDispatch();
   const post: Post = useAppSelector((state) => state.posts.items[id]);
   const currentUser: User = useAppSelector((state) => state.users.items);
-  const [isPostLiked, setPostLiked] = useState(post.likedUser.includes(currentUser.username));
-  
+  const [isPostLiked, setPostLiked] = useState(
+    post.likedUser.includes(currentUser.username),
+  );
+
   function getUser(): User {
     let user: User = {
       name: "",
@@ -97,9 +106,8 @@ export default function Post({
   function handlePostLike() {
     // action(PostRef.current?.id, "like");
 
-    dispatch(like({id: id, username: loggedInUser.username}))
+    dispatch(like({ id: id, username: loggedInUser.username }));
     isPostLiked ? setPostLiked(false) : setPostLiked(true);
-
   }
 
   function followUser() {
@@ -150,23 +158,22 @@ export default function Post({
             </h1>
             <p className=" text-secondary-color text-[.8rem]">{timePosted}</p>
           </div>
-          
         </div>
 
         {loggedInUser && loggedInUser.username != author.username ? (
-            <li
-              className="px-4 pr-[16px] py-1.5 flex gap-2 text-[0.8rem] items-center justify-center rounded-[10px] transition-transform active:scale-95 cursor-pointer"
-              style={style}
-              onClick={followUser}
-            >
-              <span>{isFollowing ? <FiUserCheck /> : <FiUserPlus />}</span>
-              <span className=" font-medium">
-                {isFollowing ? "Following" : "Follow"}
-              </span>
-            </li>
-          ) : (
-            <></>
-          )}
+          <li
+            className="px-4 pr-[16px] py-1.5 flex gap-2 text-[0.8rem] items-center justify-center rounded-[10px] transition-transform active:scale-95 cursor-pointer"
+            style={style}
+            onClick={followUser}
+          >
+            <span>{isFollowing ? <FiUserCheck /> : <FiUserPlus />}</span>
+            <span className=" font-medium">
+              {isFollowing ? "Following" : "Follow"}
+            </span>
+          </li>
+        ) : (
+          <></>
+        )}
 
         <span className="icon only-icon h-[100%] flex items-center justify-center text-[1.4rem]">
           <FiMoreVertical />
@@ -192,23 +199,23 @@ export default function Post({
           >
             {isPostLiked ? (
               <span className="text-red-500">
-                <FaHeart />
+                <HeartSolid width={30} height={30} strokeWidth={1.5} />
               </span>
             ) : (
-              <FiHeart />
+              <Heart width={30} height={30} strokeWidth={1.5} />
             )}
           </span>
           <span
             className="icon only-icon text-[1.5rem]"
             onClick={(e) => action(PostRef.current?.id, "comment")}
           >
-            <BiMessageAltDetail />
+            <ChatLines width={30} height={30} strokeWidth={1.5} />
           </span>
           <span
             className="icon only-icon text-[1.5rem]"
             onClick={(e) => action(PostRef.current?.id, "share")}
           >
-            <BiSend />
+            <SendDiagonal width={29} height={29} strokeWidth={1.5} />
           </span>
         </div>
 
@@ -216,14 +223,14 @@ export default function Post({
           className="icon only-icon text-[1.5rem]"
           onClick={(e) => action(PostRef.current?.id, "save")}
         >
-          <FiBookmark />
+          <Bookmark width={30} height={30} strokeWidth={1.5} />
         </div>
       </div>
 
       <div className="w-[100%] flex justify-start items-start flex-col">
         <p className="w-[100%] text-left text-[.9rem] text-primary-color">
           {Intl.NumberFormat("en", { notation: "compact" }).format(
-            post.likedUser.length
+            post.likedUser.length,
           )}{" "}
           likes
         </p>

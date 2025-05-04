@@ -4,6 +4,7 @@ import userData from "@/app/api/userData";
 import DmSidebar from "@/components/sidebar/DmSidebar";
 import PFP from "@/components/ui/PFP";
 import EmojiPicker, { EmojiStyle, Theme } from "emoji-picker-react";
+import { Album, Emoji, MediaImage, Microphone, NavArrowLeft, PhoneOutcome, Send, SendDiagonal } from "iconoir-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { KeyboardEvent, useRef, useState } from "react";
@@ -110,7 +111,7 @@ export default function DmPage({ params }: { params: { username: string } }) {
                     href={"/dm"}
                     className="back-ic hidden text-secondary-color icon only-icon text-[1.5rem]"
                   >
-                    <FiChevronLeft />
+                    <NavArrowLeft width={30} height={30} strokeWidth={1.5}/>
                   </Link>
 
                     <PFP image={user.image} size={100} />
@@ -152,7 +153,7 @@ export default function DmPage({ params }: { params: { username: string } }) {
                   className="icon only-icon text-secondary-color text-[1.4rem] emoji "
                   onClick={chooseEmoji}
                 >
-                  <MdOutlineEmojiEmotions />
+                   <Emoji width={25} height={25} strokeWidth={1.5}/>
                 </span>
                 <EmojiPicker
                   style={{
@@ -181,17 +182,17 @@ export default function DmPage({ params }: { params: { username: string } }) {
                 />
                 <ul className="flex justify-center items-center gap-5 text-secondary-color text-[1.3rem]">
                   <li className="icon only-icon">
-                    <FiImage />
+                     <MediaImage width={25} height={25} strokeWidth={1.5}/>
                   </li>
                   <li className="icon only-icon">
-                    <FiMic />
+                     <Microphone width={25} height={25} strokeWidth={1.5}/>
                   </li>
 
                   <li
                     className="ic bg-royalblue text-[#fff] px-4 pr-[16px] py-2 rounded-full transition-all active:scale-95 cursor-pointer"
                     onClick={() => sendMessage(msgInputRef.current?.value)}
                   >
-                    <FiSend />
+                     <SendDiagonal width={25} height={25} strokeWidth={1.5}/>
                   </li>
                 </ul>
               </div>
